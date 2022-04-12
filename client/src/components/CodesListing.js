@@ -18,7 +18,9 @@ const CodesListing = (props) => {
     const [array, setArray] = useState(codes)
 
     useEffect(() => {
-        setArray(codes)
+        if(codes.length > 0){
+           setArray(codes) 
+        }
     }, [codes])
 
     useEffect(() => {
@@ -27,7 +29,7 @@ const CodesListing = (props) => {
 
     return (
         <>{
-            array.length === 0 ? <div><h2>CodeListing crashed! No array of codes</h2></div> : <div style={{ marginLeft: '5px' }}>
+            array.length === 0 ? <div><h2>No array of codes. Create code</h2></div> : <div style={{ marginLeft: '5px' }}>
                 <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>Listing Codes: {array.length}</Typography>
                 {array.length > 0 &&
                     array.map((ele, i) => {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-import { withRouter } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import { array } from "../actions/userAction"
-import { Typography, Grid, Link } from "@mui/material"
+import { Typography, Grid} from "@mui/material"
 import DashboardChart from "./DashboardChart"
 import axios from "axios"
 import DashboardTable from "./DashboardTable"
@@ -73,7 +73,7 @@ const StudentProfile = (props) => {
                     <Typography variant="h6">Questions</Typography>
                     <ul>{
                         codes.map(ele => {
-                            return <li key={ele._id}><Link>{ele.title}</Link></li>
+                            return <li key={ele._id}><Link to={`/codes/${ele._id}`} >{ele.title}</Link></li>
                         })
                     }</ul>
                 </Grid>
