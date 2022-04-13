@@ -20,7 +20,7 @@ import { withRouter } from "react-router-dom"
 import Swal from 'sweetalert2'
 
 const CodeSnippets = (props) => {
-    const user = useSelector(state=>{
+    const user = useSelector(state => {
         return state.user
     })
     const admin = user.role === 'admin' ? true : false
@@ -67,7 +67,7 @@ const CodeSnippets = (props) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(asyncGetCode(_id, getResult))
-    }, [codeToggle])
+    }, [codeToggle, snippetToggle])
 
     useEffect(() => {
         return () => {
@@ -189,7 +189,6 @@ const CodeSnippets = (props) => {
             if (a) {
                 const index = Number(a.id) + 1
                 const h = getHints(obj.snippets.slice(0, index))
-                //console.log('next',index, a, obj.snippets, count)
                 setStudHints(h)
                 setCount(index)
             } else {
@@ -198,6 +197,11 @@ const CodeSnippets = (props) => {
                 setStudHints(h)
                 setNxt(true)
             }
+        } else {
+            setCount(obj.snippets.length)
+            const h = getHints(obj.snippets)
+            setStudHints(h)
+            setNxt(true)
         }
     }
     const handlePrevious = (e) => {
@@ -205,18 +209,23 @@ const CodeSnippets = (props) => {
         setNxt(false)
         const arr = [...obj.snippets].reverse()
         if (count > 0) {
-            const a = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'input')
-            if (a) {
-                let index = a.id + 1
+            //const a = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'input')
+            const o = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'input')
+            if (o) {
+                //let index = a.id + 1
+                const a = obj.snippets.findIndex(ele=>ele._id===o._id)
+                let index = a + 1
                 const h = getHints(obj.snippets.slice(0, index))
-                //console.log('prev',h, index, a)
+                console.log('h='+h+'  index='+ index+'  a=', a)
                 setStudHints(h)
                 setCount(index)
             } else {
                 setCount(count)
                 setPrev(true)
             }
-
+        } else {
+            setCount(count)
+            setPrev(true)
         }
     }
 
@@ -306,10 +315,10 @@ const CodeSnippets = (props) => {
                 (admin && Object.keys(obj).length > 0) && <div style={{ margin: '5px' }}>
                     <h3>Admin view</h3>
                     <Typography variant="h5" color="primary.dark">Code and Snippets</Typography>
-                    {snippetToggle ? <>                        
-                            <h3>Admin create snippet form</h3>
-                            <ErrorBoundary><CodeSnippetForm admin={admin} codeId={_id} {...props} obj={obj} handleEditSnippets={handleEditSnippets} /></ErrorBoundary>
-                        </>
+                    {snippetToggle ? <>
+                        <h3>Admin create snippet form</h3>
+                        <ErrorBoundary><CodeSnippetForm admin={admin} codeId={_id} {...props} obj={obj} handleEditSnippets={handleEditSnippets} /></ErrorBoundary>
+                    </>
                         : <div>
                             {
                                 codeToggle ? <EditCode code={obj} handleEditCode={handleEditCode} handleCancelCode={handleCancelCode} /> : <>

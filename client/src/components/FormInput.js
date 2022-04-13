@@ -76,9 +76,11 @@ const FromInput = (props) => {
                 hints: hints,
                 answer: ans,
                 isDisable: false,
-                explanation: explain
+                explanation: explain,
+                id: id
             }
             formSubmission(obj)
+            console.log('i/p obj=', obj)
         } else {
             setErr(errors)
         }

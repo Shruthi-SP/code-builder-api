@@ -27,6 +27,7 @@ const CodeDashboard = (props) => {
         return r
     }
 
+    const [array1, setArray1] = useState([])
     const [answers, setAnswers] = useState([])
     const [codes, setCodes] = useState([])
     const [auto, setAuto] = useState([])
@@ -36,6 +37,12 @@ const CodeDashboard = (props) => {
     const [score, setScore] = useState({})
     const [studentsAll, setStudentsAll] = useState([])
     const [studentSpec, setStudentSpec] = useState([])
+    const [go, setGo] = useState(false)
+
+    useEffect(()=>{
+        const a = array.filter(ele=>ele.role==='student')
+        setArray1(a)
+    }, [])
 
     const getAllSubmitted = (id) => {
         axios.get(`http://localhost:3044/api/answers/students/${id}`)
@@ -107,11 +114,13 @@ const CodeDashboard = (props) => {
     }, [codesR])
 
     const defaultProps = {
-        options: array,
+        options: array1,
         getOptionLabel: (option) => option.user_name,
     };
 
     const handleGo = () => {
+        console.log('event go triggered')
+        setGo(true)
         if (statement && student) {
             axios.get(`http://localhost:3044/api/answers/codes/${statement._id}/students/${student.id}`)
                 .then(response => {
@@ -170,12 +179,12 @@ const CodeDashboard = (props) => {
                 })
         }
     }
-
+console.log(go, studentSpec.length>0, studentsAll.length>0, admin)
     return <div>
         <Typography variant="h4">{props.admin ? 'Admin ' : 'Student '}Dashboard</Typography>
         <Grid container direction='row' >
             <DashboardCard heading='Total Codes' number={codes.length} />
-            {admin && <><DashboardCard heading='Total Students' number={array.length} />
+            {admin && <><DashboardCard heading='Total Students' number={array1.length} />
                 <DashboardCard heading='Total Answers' number={answers.length} /></>}
         </Grid>
         <Divider sx={{ m: 2, ml: 0 }} />
@@ -219,8 +228,8 @@ const CodeDashboard = (props) => {
                 </Grid>}
                 <Button variant="contained" size="small" endIcon={<FastForward />} sx={{ mt: 2, ml: 2, p: 0, maxHeight: 52 }} onClick={handleGo}>Go</Button>
             </Grid>
-        {studentSpec.length > 0 && <DashboardTable heading={`A student's attempt to specific question`} tableData={studentSpec} />}
-        {(studentsAll.length > 0 && admin) && <DashboardTable heading={`All student's answer to specific question`} tableData={studentsAll} />}
+        {go && ((studentSpec.length > 0) ? <DashboardTable heading={`A student's attempt to specific question`} tableData={studentSpec} /> : <p>No answers yet</p>)}
+        {go && ((studentsAll.length > 0 && admin) ? <DashboardTable heading={`All student's answer to specific question`} tableData={studentsAll} /> : <p>No answers yet</p>)}
     </div>
 }
 export default CodeDashboard

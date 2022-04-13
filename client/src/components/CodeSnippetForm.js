@@ -126,23 +126,32 @@ const CodeSnippetForm = (props) => {
     const handleInsertBreak = (e) => {
         e.preventDefault()
         setLimit(limit + 1)
-        dispatch(asyncAddSnippet(props.codeId, { group: 'break', limit: limit + 1, id:arraySnippet.length },))
+        const obj = { group: 'break', limit: limit + 1, id: arraySnippet.length }
+        dispatch(asyncAddSnippet(props.codeId, obj))
+        console.log('break obj=', obj)
     }
     const handleInsertTab = (e) => {
         e.preventDefault()
-        dispatch(asyncAddSnippet(props.codeId, { group: 'tab', id:arraySnippet.length }))
+        const obj = { group: 'tab', id: arraySnippet.length }
+        dispatch(asyncAddSnippet(props.codeId, obj))
+        console.log('tab=', obj)
     }
     const handleInsertDoubleTab = (e) => {
         e.preventDefault()
-        dispatch(asyncAddSnippet(props.codeId, { group: 'doubleTab', id:arraySnippet.length }))
+        const obj = { group: 'doubleTab', id: arraySnippet.length }
+        dispatch(asyncAddSnippet(props.codeId, obj))
+        console.log('dobtab=', obj)
     }
     const handleInsertSpace = (e) => {
         e.preventDefault()
-        dispatch(asyncAddSnippet(props.codeId, { group: 'space', id:arraySnippet.length }))
+        const obj = { group: 'space', id: arraySnippet.length }
+        dispatch(asyncAddSnippet(props.codeId, obj))
+        console.log('space', obj)
     }
     const handleInsertSubmit = (e) => {
         e.preventDefault()
-        dispatch(asyncAddSnippet(props.codeId, { group: 'submit', id:arraySnippet.length }))
+        const obj = { group: 'submit', id: arraySnippet.length }
+        dispatch(asyncAddSnippet(props.codeId, obj))
     }
     //------------------------Submit Answers---------------------
     const handleSubmitAns = (e) => {
@@ -263,7 +272,7 @@ const CodeSnippetForm = (props) => {
                                 </ol>
                             </div>
 
-                            {formTextToggle && <AddSnippet length={arraySnippet.length} codeId={props.codeId} group={'texts'} handleFormTextToggle={handleFormTextToggle} handleCancelText={handleCancelText}  />}
+                            {formTextToggle && <AddSnippet length={arraySnippet.length} codeId={props.codeId} group={'texts'} handleFormTextToggle={handleFormTextToggle} handleCancelText={handleCancelText} />}
                             {formInputToggle && <AddSnippet length={arraySnippet.length} codeId={props.codeId} group={'input'} handleFormInputToggle={handleFormInputToggle} handleCancelInput={handleCancelInput} />}
 
                             <Grid container >

@@ -59,7 +59,7 @@ const DashboardTable = (props) => {
               <TableRow key={row.id}>
                 <TableCell >{row.name}</TableCell>
                 <TableCell >{row.question}</TableCell>
-                <TableCell ><ul style={{ listStyleType: 'none' }}>
+                <TableCell ><ul style={{ listStyleType: 'none', padding: '0px' }}>
                   {row.answers.map((ele, i) => {
                     return <li key={ele.snipId}>{ele.snipAnswer}</li>
                   })}
