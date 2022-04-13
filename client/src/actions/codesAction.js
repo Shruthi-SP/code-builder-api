@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 
 export const asyncGetAllCodes = () => {
     return (dispatch) => {
-        axios.get()
+        axios.get('/code-snippets')
             .then((response) => {
                 const result = response.data
                 if (result.hasOwnProperty('errors')) {
@@ -31,7 +31,7 @@ export const asyncGetAllCodes = () => {
 }
 export const asyncAddCode = (formData, resetForm, redirect) => {
     return (dispatch) => {
-        axios.post('', formData)
+        axios.post('/code-snippets', formData)
             .then((response) => {
                 const result = response.data
                 if (result.hasOwnProperty('errors')) {
@@ -62,7 +62,7 @@ export const asyncAddCode = (formData, resetForm, redirect) => {
 }
 export const asyncGetCode = (_id, getResult) => {
     return (dispatch) => {
-        axios.get(`/${_id}`)
+        axios.get(`/code-snippets/${_id}`)
             .then(response => {
                 const result = response.data
                 if (result.hasOwnProperty('errors')) {
@@ -90,7 +90,7 @@ export const asyncGetCode = (_id, getResult) => {
 }
 export const asyncUpdateCode = (obj, formData) => {
     return (dispatch) => {
-        axios.put(`/${obj._id}`, formData)
+        axios.put(`/code-snippets/${obj._id}`, formData)
             .then(response => {
                 const result = response.data
                 if (result.hasOwnProperty('errors')) {
@@ -118,7 +118,7 @@ export const asyncUpdateCode = (obj, formData) => {
 }
 export const asyncDeleteCode = (id, redirect) => {
     return (dispatch) => {
-        axios.delete(`/${id}`)
+        axios.delete(`/code-snippets/${id}`)
             .then(response => {
                 const result = response.data
                 if (result.hasOwnProperty('errors')) {
@@ -148,7 +148,7 @@ export const asyncDeleteCode = (id, redirect) => {
 
 export const asyncAddSnippet = (id, formData) => {
     return (dispatch) => {
-        axios.post(`/${id}/snippets`, formData)
+        axios.post(`/code-snippets/${id}/snippets`, formData)
             .then(response => {
                 const result = response.data
                 if (result.hasOwnProperty('errors')) {
@@ -176,7 +176,7 @@ export const asyncAddSnippet = (id, formData) => {
 }
 export const asyncUpdateSnippet = (codeId, snipId, formData) => {
     return (dispatch) => {
-        axios.put(`/${codeId}/snippets/${snipId}`, formData)
+        axios.put(`/code-snippets/${codeId}/snippets/${snipId}`, formData)
             .then(response => {
                 const result = response.data
                 if (result.hasOwnProperty('errors')) {
@@ -204,7 +204,7 @@ export const asyncUpdateSnippet = (codeId, snipId, formData) => {
 }
 export const asyncDeleteSnippet = (codeId, snipId) => {
     return (dispatch) => {
-        axios.delete(`/${codeId}/snippets/${snipId}`)
+        axios.delete(`/code-snippets/${codeId}/snippets/${snipId}`)
             .then(response => {
                 const result = response.data
                 if (result.hasOwnProperty('errors')) {

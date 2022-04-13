@@ -17,7 +17,7 @@ export const buildFor = (ele) => {
     } else if (ele.group === 'submit') {
         return <Submit />
     } else if (ele.group === 'input') {
-        return <input type='text' disabled={true}  />
+        return <input type='text' disabled={true} size='2' />
     }
 }
 export const arrToDd = (arr) => {

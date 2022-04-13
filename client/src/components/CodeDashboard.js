@@ -1,4 +1,5 @@
-import axios from "axios"
+//import axios from "axios"
+import axios from "../config/axios-config";
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import TextField from '@mui/material/TextField';
@@ -45,7 +46,7 @@ const CodeDashboard = (props) => {
     }, [])
 
     const getAllSubmitted = (id) => {
-        axios.get(`http://localhost:3044/api/answers/students/${id}`)
+        axios.get(`/answers/students/${id}`)
             .then(response => {
                 const result = response.data
                 if (result.hasOwnProperty('errors')) {
@@ -81,7 +82,7 @@ const CodeDashboard = (props) => {
 
     useEffect(() => {
         let result
-        axios.get('http://localhost:3044/api/answers')
+        axios.get('/answers')
             .then((response) => {
                 result = response.data
                 if (result.hasOwnProperty('errors')) {
@@ -122,7 +123,7 @@ const CodeDashboard = (props) => {
         console.log('event go triggered')
         setGo(true)
         if (statement && student) {
-            axios.get(`http://localhost:3044/api/answers/codes/${statement._id}/students/${student.id}`)
+            axios.get(`/answers/codes/${statement._id}/students/${student.id}`)
                 .then(response => {
                     const result = response.data
                     //console.log('go both', result)
@@ -153,7 +154,7 @@ const CodeDashboard = (props) => {
             getAllSubmitted(student.id)
         }
         if (statement) {
-            axios.get(`http://localhost:3044/api/answers/codes/${statement._id}`)
+            axios.get(`/answers/codes/${statement._id}`)
                 .then(response => {
                     const result = response.data
                     if (result.hasOwnProperty('errors')) {
