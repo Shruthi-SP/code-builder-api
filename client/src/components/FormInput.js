@@ -80,7 +80,6 @@ const FromInput = (props) => {
                 id: id
             }
             formSubmission(obj)
-            console.log('i/p obj=', obj)
         } else {
             setErr(errors)
         }

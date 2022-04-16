@@ -180,7 +180,7 @@ const CodeDashboard = (props) => {
                 })
         }
     }
-console.log(go, studentSpec.length>0, studentsAll.length>0, admin)
+
     return <div>
         <Typography variant="h4">{props.admin ? 'Admin ' : 'Student '}Dashboard</Typography>
         <Grid container direction='row' >

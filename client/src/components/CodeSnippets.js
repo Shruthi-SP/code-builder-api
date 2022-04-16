@@ -4,7 +4,7 @@ import CodeSnippetForm from "./CodeSnippetForm"
 import { buildFor } from "./tools/helper"
 import { asyncDeleteCode, asyncGetCode } from "../actions/codesAction"
 import EditCode from "./EditCode"
-import { Button, ButtonGroup, Typography, Grid } from "@mui/material"
+import { Button, ButtonGroup, Typography, Grid, Box, Paper } from "@mui/material"
 import { Delete, Edit, Add } from "@mui/icons-material"
 import ErrorBoundary from "./ErrorBoundary"
 import axios from "axios"
@@ -213,10 +213,9 @@ const CodeSnippets = (props) => {
             const o = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'input')
             if (o) {
                 //let index = a.id + 1
-                const a = obj.snippets.findIndex(ele=>ele._id===o._id)
+                const a = obj.snippets.findIndex(ele => ele._id === o._id)
                 let index = a + 1
                 const h = getHints(obj.snippets.slice(0, index))
-                console.log('h='+h+'  index='+ index+'  a=', a)
                 setStudHints(h)
                 setCount(index)
             } else {
@@ -327,13 +326,25 @@ const CodeSnippets = (props) => {
                                 </>
                             }
                             {
-                                arraySnippet.length > 0 && arraySnippet.map((ele, i) => {
-                                    return <code key={i}>
-                                        {buildFor(ele)}
-                                    </code>
-                                })
+                                // arraySnippet.length > 0 && arraySnippet.map((ele, i) => {
+                                //     return <code key={i}>
+                                //         {buildFor(ele)}
+                                //     </code>
+                                // })
+                                arraySnippet.length > 0 && <Box sx={{ width: '50%', m: 1 }}>
+                                    <h4 style={{ margin: '3px' }}>Code</h4>
+                                    <Paper elevation={3} sx={{ p: 1, backgroundColor: '#F8F9F9' }} >
+                                        {
+                                            arraySnippet.map((ele, i) => {
+                                                return <code key={i}>
+                                                    {buildFor(ele)}
+                                                </code>
+                                            })
+                                        }
+                                    </Paper>
+                                </Box>
                             }
-                            <br /><br />
+                            <br />
                             <ButtonGroup variant="contained" aria-label="outlined primary button group">
                                 <Button sx={{ mr: 1 }} startIcon={<Edit />} onClick={handleEditCode}>Edit Code</Button>
                                 <Button sx={{ mr: 1 }} startIcon={<Delete />} onClick={handleRemoveCode}>Remove Code</Button>
@@ -345,7 +356,7 @@ const CodeSnippets = (props) => {
                 </div>
             }
             {(!admin || preview) && <div>
-                <h2>{admin ? 'student view' : 'Code'}</h2>
+                <h3>{admin ? 'Student view' : 'Code'}</h3>
                 {/* <h2>Sibling of CodeSnippetForm component</h2> */}
                 {/* <span>Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering, in lifecycle methods, and in constructors of the whole tree below them.</span><br /> */}
                 <Grid container>
@@ -355,22 +366,26 @@ const CodeSnippets = (props) => {
                                 <b>{obj.title}</b><br />
                                 <b>{obj.statement}</b><br />
                             </code>
-                            {start && <Button variant="contained" size="small" onClick={(e) => { handleStart(e) }}>start</Button>}
-                            {
-                                <div style={{ margin: '5px' }}>
-                                    <form onSubmit={(e) => { handleSubmitAns(e) }}>
-                                        {obj.hasOwnProperty('snippets') &&
-                                            arraySnippet.slice(0, count).map((ele, i) => {
-                                                return <code key={i}>{buildForStudent(ele)}</code>
-                                            })
-                                        }
-                                        <br /><br />
-                                        {!start && <><Button sx={{ mr: 1 }} variant="contained" size="small" disabled={prev} onClick={(e) => { handlePrevious(e) }}>Previous</Button>
-                                            <Button variant="contained" size="small" disabled={nxt} onClick={(e) => { handleNext(e) }}>Next</Button></>}
-                                    </form>
-                                    <br />
-                                </div>
-                            }
+                            <Box sx={{ m: 1, ml: 0 }}>
+                                <Paper elevation={3} sx={{ p: 1, backgroundColor: '#F8F9F9' }}>
+                                    {start && <Button variant="contained" size="small" onClick={(e) => { handleStart(e) }}>start</Button>}
+                                    {
+                                        <div style={{ margin: '5px' }}>
+                                            <form onSubmit={(e) => { handleSubmitAns(e) }}>
+                                                {obj.hasOwnProperty('snippets') &&
+                                                    arraySnippet.slice(0, count).map((ele, i) => {
+                                                        return <code key={i}>{buildForStudent(ele)}</code>
+                                                    })
+                                                }
+                                                <br /><br />
+                                                {!start && <><Button sx={{ mr: 1 }} variant="contained" size="small" disabled={prev} onClick={(e) => { handlePrevious(e) }}>Previous</Button>
+                                                    <Button variant="contained" size="small" disabled={nxt} onClick={(e) => { handleNext(e) }}>Next</Button></>}
+                                            </form>
+                                            <br />
+                                        </div>
+                                    }
+                                </Paper>
+                            </Box>
                         </div>
                         {errors.length > 0 && <ul>{
                             errors.map((ele, i) => {

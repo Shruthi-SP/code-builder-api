@@ -3,7 +3,7 @@ import Input from '../components/tools/Input'
 import Tab from '../components/tools/Tab'
 import Space from '../components/tools/Space'
 import Submit from '../components/tools/Submit'
-import { Typography } from '@mui/material'
+import { Typography, Box, Paper } from '@mui/material'
 
 const CodeItem = (props) => {
     const { snippets } = props
@@ -26,12 +26,22 @@ const CodeItem = (props) => {
 
     return (
         <>
-            <h5 style={{margin:'0px'}}>Code</h5>
+            {/* <h5 style={{margin:'0px'}}>Code</h5>
             {
                 snippets.map((ele,i)=>{
                     return <code key={i}>{buildFor(ele)}</code>
                 })
-            }
+            } */}
+            <Box sx={{ width: '50%' }} >
+                <h3 style={{ margin: '0px' }}>Code</h3>
+                <Paper elevation={3} sx={{ p: 1 }} >
+                    {
+                        snippets.map((ele, i) => {
+                            return <code key={i}>{buildFor(ele)}</code>
+                        })
+                    }
+                </Paper>
+            </Box>
         </>
         // <div>
         //     <h5>Code {snippets.length}</h5>

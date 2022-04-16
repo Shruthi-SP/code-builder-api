@@ -78,7 +78,6 @@ const FormText = (props) => {
                 id: id
             }
             formSubmission(obj)
-            console.log('text obj=', obj)
         } else {
             setErr(errors)
         }

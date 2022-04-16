@@ -128,25 +128,21 @@ const CodeSnippetForm = (props) => {
         setLimit(limit + 1)
         const obj = { group: 'break', limit: limit + 1, id: arraySnippet.length }
         dispatch(asyncAddSnippet(props.codeId, obj))
-        console.log('break obj=', obj)
     }
     const handleInsertTab = (e) => {
         e.preventDefault()
         const obj = { group: 'tab', id: arraySnippet.length }
         dispatch(asyncAddSnippet(props.codeId, obj))
-        console.log('tab=', obj)
     }
     const handleInsertDoubleTab = (e) => {
         e.preventDefault()
         const obj = { group: 'doubleTab', id: arraySnippet.length }
         dispatch(asyncAddSnippet(props.codeId, obj))
-        console.log('dobtab=', obj)
     }
     const handleInsertSpace = (e) => {
         e.preventDefault()
         const obj = { group: 'space', id: arraySnippet.length }
         dispatch(asyncAddSnippet(props.codeId, obj))
-        console.log('space', obj)
     }
     const handleInsertSubmit = (e) => {
         e.preventDefault()
