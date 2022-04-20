@@ -6,7 +6,7 @@ const PrivateRoute = (props) => {
     const {component:Component, path, ...rest} = props
     return (
         <ErrorBoundary><Route path={path} exact={true} {...rest} render={(props)=>{
-            return localStorage.getItem('user') ? (
+            return localStorage.getItem('token') ? (
                 <Component {...props} {...rest} />
             ) : (
                 <Redirect to={{pathname: '/login'}} />
