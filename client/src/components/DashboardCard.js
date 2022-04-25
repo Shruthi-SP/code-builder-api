@@ -1,4 +1,4 @@
-import { Grid, Card, CardContent, CardActions, Button, Typography } from "@mui/material";
+import { Grid, Card, CardContent, Typography } from "@mui/material";
 const DashboardCard = (props) => {
     const { heading, number } = props
     return <Grid item >
@@ -11,9 +11,6 @@ const DashboardCard = (props) => {
                     {number}
                 </Typography>
             </CardContent>
-            {/* <CardActions>
-                <Button size="small">Learn More</Button>
-            </CardActions> */}
         </Card>
     </Grid>
 }

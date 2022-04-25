@@ -7,12 +7,16 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
-import { array } from '../actions/userAction';
+//import { array } from '../actions/userAction';
 import { useSelector } from 'react-redux';
 
 const DashboardTable = (props) => {
   const { heading, tableData } = props
   //console.log('DT props=', heading, tableData)
+
+  const members = useSelector(state=>{
+    return state.members
+  })
 
   const codes = useSelector(state=>{
     return state.codes
@@ -27,7 +31,7 @@ const DashboardTable = (props) => {
   // })
 
   const getStudentName = (id) => {
-    const student = array.find(ele => ele.id == id)
+    const student = members.find(ele => ele.id == id)
     //console.log('get student name=',student)
     let r =''
     return r = student ? student.user_name : 'anonymous'

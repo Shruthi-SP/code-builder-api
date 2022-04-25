@@ -8,7 +8,7 @@ import { Button, ButtonGroup, Typography, Grid, Box, Paper } from "@mui/material
 import { Delete, Edit, Add } from "@mui/icons-material"
 import ErrorBoundary from "./ErrorBoundary"
 import axios from "axios"
-import CodeSolution from "./CodeSolution"
+//import CodeSolution from "./CodeSolution"
 import Input from "./tools/Input"
 import Break from "./tools/Break"
 import Space from "./tools/Space"
@@ -123,7 +123,7 @@ const CodeSnippets = (props) => {
                     err.push(`Expected ${ele.answer} instead Received ${ele.value}`)
             }
         })
-        const studentId = JSON.parse(localStorage.getItem('user')).id
+        const studentId = user.id
         const str = `Score ${n}/${arr.length}`
         const formData = {
             codeId: _id,
