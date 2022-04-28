@@ -15,6 +15,7 @@ import { Box, Grid} from "@mui/material"
 import CodeDashboard from "./CodeDashboard"
 import Swal from 'sweetalert2'
 import StudentProfile from "./StudentProfile"
+import Demo from "./Demo"
 
 const CodesContainer = (props) => {
     const [show, setShow] = useState(false)
@@ -78,6 +79,7 @@ const CodesContainer = (props) => {
                                 {show && <Link style={{ margin: '5px' }} to='/codes/:id'>Snippet </Link>}
                                 {!admin && <Link style={{ margin: '5px' }} to='/students/:id'>My-Profile </Link>}
                                 <Link style={{ margin: '5px' }} to='/dashboard' >Dashboard</Link>
+                                <Link style={{ margin: '5px' }} to='/demo' >Demo</Link>
                             </Grid>
                             <Grid item xs sx={{ display: "flex", justifyContent: "flex-end" }}>
                                 <Link style={{ margin: '5px', justifyContent: 'end' }} to='#' onClick={handleLogout}>Logout</Link>
@@ -102,6 +104,7 @@ const CodesContainer = (props) => {
             <PrivateRoute path='/codes/:id' component={CodeSnippets} />
             <PrivateRoute path='/students/:id' component={StudentProfile} />
             <PrivateRoute path='/dashboard' component={CodeDashboard} />
+            <PrivateRoute path='/demo' component={Demo} />
         </Box>
     )
 }

@@ -14,11 +14,11 @@ const DashboardTable = (props) => {
   const { heading, tableData } = props
   //console.log('DT props=', heading, tableData)
 
-  const members = useSelector(state=>{
+  const members = useSelector(state => {
     return state.members
   })
 
-  const codes = useSelector(state=>{
+  const codes = useSelector(state => {
     return state.codes
   })
 
@@ -31,15 +31,14 @@ const DashboardTable = (props) => {
   // })
 
   const getStudentName = (id) => {
-    const student = members.find(ele => ele.id == id)
+    const student = members.find(ele => ele.id === id)
     //console.log('get student name=',student)
-    let r =''
-    return r = student ? student.user_name : 'anonymous'
+    return student ? student.user_name : 'anonymous'
   }
   const getCodeTitle = (id) => {
-    const code = codes.data.find(ele=>ele._id==id)
+    const code = codes.data.find(ele => ele._id === id)
     //console.log('get code', code)
-    return code.statement
+    return code ? code.statement : 'This code no longer exist.'
   }
   const rows = tableData.map(ele => {
     return createData(getStudentName(ele.studentId), getCodeTitle(ele.codeId), ele.answers, ele.score, ele._id)

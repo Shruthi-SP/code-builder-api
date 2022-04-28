@@ -233,7 +233,7 @@ const CodeDashboard = (props) => {
                 <Button variant="contained" size="small" endIcon={<FastForward />} sx={{ mt: 2, ml: 2, p: 0, maxHeight: 52 }} onClick={handleGo}>Go</Button>
             </Grid>
         {go && <>{(studentSpec.length > 0 ) ? <DashboardTable heading={`A student's attempt to specific question`} tableData={studentSpec} /> : <p>No answers yet</p>}</>}
-        {go && <>{(studentsAll.length > 0 && admin) ? <DashboardTable heading={`All student's answer to specific question`} tableData={studentsAll} /> : <p>No answers yet from all students</p>}</>}
+        {(go && admin) && <>{(studentsAll.length > 0) ? <DashboardTable heading={`All student's answer to specific question`} tableData={studentsAll} /> : <p>No answers yet from all students</p>}</>}
     </div>
 }
 export default CodeDashboard
