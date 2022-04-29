@@ -22,6 +22,10 @@ const DashboardTable = (props) => {
     return state.codes
   })
 
+  const user = useSelector(state => {
+    return state.user
+  })
+
   function createData(name, question, answers, score, id) {
     return { name, question, answers, score, id };
   }
@@ -41,7 +45,7 @@ const DashboardTable = (props) => {
     return code ? code.statement : 'This code no longer exist.'
   }
   const rows = tableData.map(ele => {
-    return createData(getStudentName(ele.studentId), getCodeTitle(ele.codeId), ele.answers, ele.score, ele._id)
+    return createData(user.role === 'admin' ? getStudentName(ele.studentId) : user.user_name, getCodeTitle(ele.codeId), ele.answers, ele.score, ele._id)
   })
 
   function BasicTable() {

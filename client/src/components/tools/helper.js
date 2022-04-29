@@ -2,6 +2,7 @@ import Break from "./Break"
 import Tab from "./Tab"
 import Space from "./Space"
 import Submit from "./Submit"
+import Control from "./Control"
 
 export const buildFor = (ele) => {
     if (ele.group === 'texts') {
@@ -18,6 +19,8 @@ export const buildFor = (ele) => {
         return <Submit />
     } else if (ele.group === 'input') {
         return <input type='text' disabled={true} size='2' />
+    } else if (ele.group === 'control') {
+        return <Control />
     }
 }
 export const arrToDd = (arr) => {

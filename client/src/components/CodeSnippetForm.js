@@ -149,6 +149,11 @@ const CodeSnippetForm = (props) => {
         const obj = { group: 'submit', id: arraySnippet.length }
         dispatch(asyncAddSnippet(props.codeId, obj))
     }
+    const handleInsertControl = (e) => {
+        e.preventDefault()
+        const obj = { group: 'control', id: arraySnippet.length }
+        dispatch(asyncAddSnippet(props.codeId, obj))
+    }
     //------------------------Submit Answers---------------------
     const handleSubmitAns = (e) => {
         e.preventDefault()
@@ -211,6 +216,7 @@ const CodeSnippetForm = (props) => {
         <Button variant="contained" color="secondary" size="small" sx={{ borderRadius: 10, m: 1 }} onClick={handleInsertBreak}>Insert Break</Button>,
         <Button variant="contained" color="secondary" size="small" sx={{ borderRadius: 10, m: 1 }} onClick={handleInsertSpace}>Insert Space</Button>,
         <Button variant="contained" color="secondary" size="small" sx={{ borderRadius: 10, m: 1 }} onClick={handleInsertSubmit}>Insert Submit</Button>,
+        <Button variant="contained" color="secondary" size="small" sx={{ borderRadius: 10, m: 1 }} onClick={handleInsertControl}>Insert Control</Button>,
     ]
 
     const buildFor = (ele) => {
@@ -229,6 +235,8 @@ const CodeSnippetForm = (props) => {
         } else if (ele.group === 'input') {
             //return <Input ele={ele} handleInputChange={handleInputChange} />
             return <input type='text' size='2' disabled={true} />
+        } else if (ele.group === 'control') {
+            return 'Control'
         }
     }
 

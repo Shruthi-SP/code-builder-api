@@ -1,17 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 const Input = (props) => {
     const { isSubmitted, ele, handleInputChange, handleInputBlur, handleInputFocusEnter, handleInputFocusLeave, hintFocus, focusedObj } = props
 
     const [highlight, setHighlight] = useState(false)
-    const [same, setSame] = useState(false)
-    // useEffect(()=>{
-    //     ele.hints.forEach(e=>{
-    //         if(e.hint===hintFocus){
-    //             setSame(true)
-    //         }
-    //     })
-    // },[])
-    // console.log('i/p=', ele, focusedHint, hintFocus, same)
 
     const handleMouseEnter = (e, ele) => {
         setHighlight(true)
@@ -22,7 +13,7 @@ const Input = (props) => {
         handleInputFocusLeave(e, ele)
     }
     return <input
-        style={{ border: (isSubmitted ? (ele.answer === ele.value ? '2px solid green' : '2px solid red') : '1px solid black'), width: (ele.answer.length) * 6 + 'px', border: (highlight || (hintFocus && ele.id===focusedObj.id)) && '2px solid blue' }}
+        style={{ width: ((ele.answer.length) * 6 + 1) + 'px', border: ((highlight || (hintFocus && ele.id===focusedObj.id)) && '2px solid blue') || (isSubmitted ? (ele.answer === ele.value ? '2px solid green' : '2px solid red') : '1px solid black') }}
         type='text'
         name='inputText'
         value={ele.value}
