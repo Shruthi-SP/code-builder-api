@@ -9,7 +9,7 @@ const Hint = (props) => {
             <h4 style={{ marginBottom: '0px' }}>Hints</h4>
             {
                 hints.map((ele, i)=>{
-                    return <HintsHighlight key={i} hint={ele} same={arrHints.includes(ele)} isFocused={isFocused} handleHintFocusEnter={handleHintFocusEnter} handleHintFocusLeave={handleHintFocusLeave} />
+                    return <HintsHighlight key={i} hint={ele} same={arrHints && arrHints.includes(ele)} isFocused={isFocused} handleHintFocusEnter={handleHintFocusEnter} handleHintFocusLeave={handleHintFocusLeave} />
                 })
             }
             {/* <ul>

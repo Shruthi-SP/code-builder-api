@@ -45,6 +45,8 @@ const CodeSnippets = (props) => {
     const [preview, setPreview] = useState(false)
     const [isFocused, setIsFocused] = useState(false)
     const [arrHints, setArrHints] = useState([])
+    const [hintFocus, setHintFocus] = useState(false)
+    const [focusedObj, setFocusedObj] = useState({})
 
     const handlePreview = (e) => {
         setPreview(!preview)
@@ -86,27 +88,35 @@ const CodeSnippets = (props) => {
         }
     }
 
-    const handleHintFocusEnter = (e, ele) => {
-        console.log('hint enter=', ele)
+    const handleHintFocusEnter = (e, hint) => {
+        setHintFocus(true)
+        console.log('hint enter=', hint)
+        const obj = arraySnippet.find(ele=>ele.hints.find(e=>e.hint===hint))
+        console.log(obj)
+        if(obj){
+            setFocusedObj(obj)
+        }
     }
-    const handleHintFocusLeave = (e, ele) => {
-        console.log('hint leave=', ele)
+    const handleHintFocusLeave = (e, hint) => {
+        setHintFocus(false)
+        setFocusedObj({})
+        console.log('hint leave=', hint)
     }
     const handleInputFocusEnter = (e, ele) => {
         setIsFocused(true)
-        console.log('focus enter=', ele)
+        //console.log('focus enter=', ele)
         const arrHin = []
         ele.hints.forEach(e=>{
             if(studHints.includes(e.hint)){
                 arrHin.push(e.hint)
             }
         })
-        console.log(arrHin)
+        //console.log(arrHin)
         setArrHints(arrHin)
     }
     const handleInputFocusLeave = (e, ele) => {
         setIsFocused(false)
-        console.log('focus leave=', ele)
+        //console.log('focus leave=', ele)
     }
 
     const handleInputChange = (e, ele) => {
@@ -306,7 +316,7 @@ const CodeSnippets = (props) => {
         } else if (ele.group === 'submit') {
             return <Submit />
         } else if (ele.group === 'input') {
-            return <Input ele={ele} isSubmitted={isSubmitted} handleInputChange={handleInputChange} handleInputBlur={handleInputBlur} handleInputFocusEnter={handleInputFocusEnter} handleInputFocusLeave={handleInputFocusLeave} isFocused={isFocused} />
+            return <Input ele={ele} isSubmitted={isSubmitted} handleInputChange={handleInputChange} handleInputBlur={handleInputBlur} handleInputFocusEnter={handleInputFocusEnter} handleInputFocusLeave={handleInputFocusLeave} hintFocus={hintFocus} focusedObj={focusedObj} />
         }
     }
     const buildForSolution = (ele) => {
