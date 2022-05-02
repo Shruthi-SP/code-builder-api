@@ -4,7 +4,8 @@ import Swal from "sweetalert2"
 
 export const asyncGetAllMembers = () => {
     return (dispatch) => {
-        axios.get(`https://dct-cors.herokuapp.com/https://code.dctacademy.com/api/v1/ml/data/students/?key=${process.env.TOKEN}`)
+        console.log('process env token',process.env.TOKEN)
+        axios.get(`https://dct-cors.herokuapp.com/https://code.dctacademy.com/api/v1/ml/data/students?key=${process.env.TOKEN}`)
             .then((response) => {
                 const result = response.data
                 if (result.hasOwnProperty('errors')) {
