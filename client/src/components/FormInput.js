@@ -4,12 +4,13 @@ import { Add, Cancel, Edit } from "@mui/icons-material"
 import ModalHints from "./ModalHints"
 
 const FromInput = (props) => {
-    const {length, handleCancelInput, handleCancelEdit, formSubmission, answer: editAns, hint: editHint, hints: editHints, explanation: editExplain, id: editId } = props
+    const {length, handleCancelInput, handleCancelEdit, formSubmission, answer: editAns, hint: editHint, hints: editHints, explanation: editExplain, id: editId, displayOrder: editDisOrder } = props
     const [id, setId] = useState(editId ? editId : length)
     const [ans, setAns] = useState(editAns ? editAns : '')
     const [hint, setHint] = useState(editHint ? editHint : '')
     const [hints, setHints] = useState(editHints ? editHints : [])
     const [explain, setExplain] = useState(editExplain ? editExplain : '')
+    const [disOrder, setDisOrder] = useState(editDisOrder ? editDisOrder : length + 1)
     const [hObj, setHObj] = useState({})
     const [open, setOpen] = useState(false)
     const [err, setErr] = useState({})
@@ -77,7 +78,8 @@ const FromInput = (props) => {
                 answer: ans,
                 isDisable: false,
                 explanation: explain,
-                id: id
+                id: id,
+                displayOrder: disOrder
             }
             formSubmission(obj)
         } else {
@@ -111,6 +113,8 @@ const FromInput = (props) => {
             {err.hint && <span style={{ color: 'red' }}>{err.hint}</span>}<br />
 
             <TextField label='Enter explanation here' variant='outlined' type='text' value={explain} onChange={(e) => { setExplain(e.target.value) }} ></TextField> <br /><br />
+
+            <TextField label='Enter display order here' variant='outlined' type='text' value={disOrder} onChange={(e) => { setDisOrder(e.target.value) }} ></TextField> <br /><br />
 
             <Button sx={{ mr: 1 }} type="submit" variant="contained" color="primary" size="small">Submit</Button>
 

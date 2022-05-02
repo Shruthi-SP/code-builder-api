@@ -7,6 +7,7 @@ import Submit from "./tools/Submit"
 
 const CodeSolution = (props) => {
     const { codeId, obj, handleSolution, admin} = props
+    const array = [...obj.snippets].sort((a, b) => a.displayOrder - b.displayOrder)
 
     if(Object.keys(obj).length === 0){
         throw new Error('CodeSolution crashed. no code obj')
@@ -36,7 +37,7 @@ const CodeSolution = (props) => {
             <b>{obj.title}</b><br />
             <b>{obj.statement}</b><br />
             {
-                obj.snippets.slice(0, obj.snippets.length).map(ele=>{
+                array.map(ele=>{
                     return <code key={ele._id}>{buildFor(ele)}</code>
                 })
             }

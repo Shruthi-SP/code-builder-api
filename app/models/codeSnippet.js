@@ -40,6 +40,9 @@ const codeSnippetSchema = new Schema({
             },
             explanation: {
                 type: String
+            },
+            displayOrder: {
+                type: Number
             }
         }
     ]

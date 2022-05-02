@@ -7,11 +7,16 @@ const HintsHighlight = (props) => {
 
     const handleMouseEnter = (e, hint) => {
         setUnderline(true)
-        handleHintFocusEnter(e, hint)
+        if(handleHintFocusEnter){
+           handleHintFocusEnter(e, hint) 
+        }
+        
     }
     const handleMouseLeave = (e, hint) => {
         setUnderline(false) 
-        handleHintFocusLeave(e, hint)
+        if(handleHintFocusLeave){
+           handleHintFocusLeave(e, hint) 
+        }
     }
 
     return (
