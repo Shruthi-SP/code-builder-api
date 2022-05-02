@@ -4,8 +4,8 @@ import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { Grid, Card, CardContent, CardActions, Button, Typography, Divider } from "@mui/material";
-import { array } from "../actions/userAction";
+import { Grid, Button, Typography, Divider } from "@mui/material";
+//import { array } from "../actions/userAction";
 import DashboardTable from "./DashboardTable";
 import DashboardCard from "./DashboardCard";
 import { FastForward } from "@mui/icons-material";
@@ -13,6 +13,9 @@ import DashboardChart from "./DashboardChart";
 import Swal from 'sweetalert2'
 
 const CodeDashboard = (props) => {
+    const members = useSelector(state => {
+        return state.members
+    })
     const codesR = useSelector(state => {
         return state.codes
     })
@@ -41,9 +44,9 @@ const CodeDashboard = (props) => {
     const [go, setGo] = useState(false)
 
     useEffect(()=>{
-        const a = array.filter(ele=>ele.role==='student')
+        const a = members.filter(ele=>ele.role==='student')
         setArray1(a)
-    }, [])
+    }, [members])
 
     const getAllSubmitted = (id) => {
         axios.get(`/answers/students/${id}`)
@@ -120,7 +123,7 @@ const CodeDashboard = (props) => {
     };
 
     const handleGo = () => {
-        console.log('event go triggered')
+        //console.log('event go triggered')
         setGo(true)
         if (statement && student) {
             axios.get(`/answers/codes/${statement._id}/students/${student.id}`)
@@ -229,8 +232,8 @@ const CodeDashboard = (props) => {
                 </Grid>}
                 <Button variant="contained" size="small" endIcon={<FastForward />} sx={{ mt: 2, ml: 2, p: 0, maxHeight: 52 }} onClick={handleGo}>Go</Button>
             </Grid>
-        {go && ((studentSpec.length > 0) ? <DashboardTable heading={`A student's attempt to specific question`} tableData={studentSpec} /> : <p>No answers yet</p>)}
-        {go && ((studentsAll.length > 0 && admin) ? <DashboardTable heading={`All student's answer to specific question`} tableData={studentsAll} /> : <p>No answers yet</p>)}
+        {go && <>{(studentSpec.length > 0 ) ? <DashboardTable heading={`A student's attempt to specific question`} tableData={studentSpec} /> : <p>No answers yet</p>}</>}
+        {(go && admin) && <>{(studentsAll.length > 0) ? <DashboardTable heading={`All student's answer to specific question`} tableData={studentsAll} /> : <p>No answers yet from all students</p>}</>}
     </div>
 }
 export default CodeDashboard

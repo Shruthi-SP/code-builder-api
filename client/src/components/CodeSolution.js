@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux"
+//import { useSelector } from "react-redux"
 import Break from './tools/Break'
 import Tab from "./tools/Tab"
 import Space from "./tools/Space"
 import Submit from "./tools/Submit"
-import ErrorBoundary from "./ErrorBoundary"
+//import ErrorBoundary from "./ErrorBoundary"
 
 const CodeSolution = (props) => {
     const { codeId, obj, handleSolution, admin} = props

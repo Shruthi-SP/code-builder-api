@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-import { Link, withRouter } from "react-router-dom"
+import { Link } from "react-router-dom"
 import CodeItem from "./CodeItem"
 
 const CodesListing = (props) => {

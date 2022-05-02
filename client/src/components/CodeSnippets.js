@@ -8,7 +8,7 @@ import { Button, ButtonGroup, Typography, Grid, Box, Paper } from "@mui/material
 import { Delete, Edit, Add } from "@mui/icons-material"
 import ErrorBoundary from "./ErrorBoundary"
 import axios from "axios"
-import CodeSolution from "./CodeSolution"
+//import CodeSolution from "./CodeSolution"
 import Input from "./tools/Input"
 import Break from "./tools/Break"
 import Space from "./tools/Space"
@@ -43,6 +43,10 @@ const CodeSnippets = (props) => {
     const [count, setCount] = useState(0)
     const [studHints, setStudHints] = useState([])
     const [preview, setPreview] = useState(false)
+    const [isFocused, setIsFocused] = useState(false)
+    const [arrHints, setArrHints] = useState([])
+    const [hintFocus, setHintFocus] = useState(false)
+    const [focusedObj, setFocusedObj] = useState({})
 
     const handlePreview = (e) => {
         setPreview(!preview)
@@ -84,12 +88,35 @@ const CodeSnippets = (props) => {
         }
     }
 
-    let userInput = []
-    if (JSON.parse(localStorage.getItem('user_inputs'))) {
-        userInput = [...(JSON.parse(localStorage.getItem('user_inputs')))]
+    const handleHintFocusEnter = (e, hint) => {
+        setHintFocus(true)
+        console.log('hint enter=', hint)
+        const obj = arraySnippet.find(ele=>ele.hints.find(e=>e.hint===hint))
+        console.log(obj)
+        if(obj){
+            setFocusedObj(obj)
+        }
     }
-    else {
-        userInput = []
+    const handleHintFocusLeave = (e, hint) => {
+        setHintFocus(false)
+        setFocusedObj({})
+        console.log('hint leave=', hint)
+    }
+    const handleInputFocusEnter = (e, ele) => {
+        setIsFocused(true)
+        //console.log('focus enter=', ele)
+        const arrHin = []
+        ele.hints.forEach(e=>{
+            if(studHints.includes(e.hint)){
+                arrHin.push(e.hint)
+            }
+        })
+        //console.log(arrHin)
+        setArrHints(arrHin)
+    }
+    const handleInputFocusLeave = (e, ele) => {
+        setIsFocused(false)
+        //console.log('focus leave=', ele)
     }
 
     const handleInputChange = (e, ele) => {
@@ -123,7 +150,7 @@ const CodeSnippets = (props) => {
                     err.push(`Expected ${ele.answer} instead Received ${ele.value}`)
             }
         })
-        const studentId = JSON.parse(localStorage.getItem('user')).id
+        const studentId = user.id
         const str = `Score ${n}/${arr.length}`
         const formData = {
             codeId: _id,
@@ -174,8 +201,8 @@ const CodeSnippets = (props) => {
         e.preventDefault()
         setStart(!start)
         setPrev(true)
-        const a = obj.snippets.find(ele => ele.group === 'input')
-        const index = obj.snippets.findIndex(ele => ele.group === 'input')
+        const a = obj.snippets.find(ele => ele.group === 'break')
+        const index = obj.snippets.findIndex(ele => ele.group === 'break')
         const h = getHints(obj.snippets.slice(0, index + 1))
         setStudHints(h)
         setCount(index + 1)
@@ -185,9 +212,11 @@ const CodeSnippets = (props) => {
         e.preventDefault()
         setPrev(false)
         if (count < obj.snippets.length) {
-            const a = obj.snippets.slice(count).find(ele => ele.group === 'input')
-            if (a) {
-                const index = Number(a.id) + 1
+            const o = obj.snippets.slice(count).find(ele => ele.group === 'break')
+            if (o) {
+                //let index = a.id + 1
+                const a = obj.snippets.findIndex(ele => ele._id === o._id)
+                let index = a + 1
                 const h = getHints(obj.snippets.slice(0, index))
                 setStudHints(h)
                 setCount(index)
@@ -210,7 +239,7 @@ const CodeSnippets = (props) => {
         const arr = [...obj.snippets].reverse()
         if (count > 0) {
             //const a = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'input')
-            const o = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'input')
+            const o = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'break')
             if (o) {
                 //let index = a.id + 1
                 const a = obj.snippets.findIndex(ele => ele._id === o._id)
@@ -287,7 +316,7 @@ const CodeSnippets = (props) => {
         } else if (ele.group === 'submit') {
             return <Submit />
         } else if (ele.group === 'input') {
-            return <Input ele={ele} isSubmitted={isSubmitted} handleInputChange={handleInputChange} handleInputBlur={handleInputBlur} />
+            return <Input ele={ele} isSubmitted={isSubmitted} handleInputChange={handleInputChange} handleInputBlur={handleInputBlur} handleInputFocusEnter={handleInputFocusEnter} handleInputFocusLeave={handleInputFocusLeave} hintFocus={hintFocus} focusedObj={focusedObj} />
         }
     }
     const buildForSolution = (ele) => {
@@ -411,7 +440,7 @@ const CodeSnippets = (props) => {
                         {(isSubmitted || admin) && <Explanations explanations={explanations} />}
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        {studHints.length > 0 && <Hint hints={studHints} />}
+                        {studHints.length > 0 && <Hint hints={studHints} arrHints={arrHints} isFocused={isFocused} handleHintFocusEnter={handleHintFocusEnter} handleHintFocusLeave={handleHintFocusLeave} />}
                     </Grid>
                 </Grid>
             </div>}

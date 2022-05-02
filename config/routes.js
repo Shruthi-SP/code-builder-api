@@ -2,10 +2,13 @@ const express = require('express')
 const router = express.Router()
 const codeSnippetCltr = require('../app/controllers/codeSnippetCltr')
 const answerCtrl = require('../app/controllers/answerCtrl')
+const usersCtrl = require('../app/controllers/usersCtlr')
 
 router.get('/', (req, res) => {
     res.send('welcome to the code builder api')
 })
+
+router.post('/login', usersCtrl.login)
 
 router.get('/code-snippets', codeSnippetCltr.list)
 router.post('/code-snippets', codeSnippetCltr.create)
