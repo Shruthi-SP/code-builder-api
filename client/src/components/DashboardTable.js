@@ -35,7 +35,7 @@ const DashboardTable = (props) => {
   const getCodeTitle = (id) => {
     const code = codes.data.find(ele=>ele._id==id)
     //console.log('get code', code)
-    return code.statement
+    return code ?  code.statement : 'This code no longer exists.'
   }
   const rows = tableData.map(ele => {
     return createData(getStudentName(ele.studentId), getCodeTitle(ele.codeId), ele.answers, ele.score, ele._id)
