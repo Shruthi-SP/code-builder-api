@@ -10,7 +10,7 @@ export const array = [
 ]
 export let allStudents = []
 const getToken = (obj, dispatch, redirect) => {
-    console.log(redirect)
+    //console.log(redirect)
     axios.post('/login', obj)
         .then((response) => {
             const tokenData = response.data

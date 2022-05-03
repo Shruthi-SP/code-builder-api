@@ -4,7 +4,8 @@ import { Link, withRouter } from "react-router-dom"
 import { array } from "../actions/userAction"
 import { Typography, Grid} from "@mui/material"
 import DashboardChart from "./DashboardChart"
-import axios from "axios"
+// import axios from "axios"
+import axios from '../config/axios-config'
 import DashboardTable from "./DashboardTable"
 
 const StudentProfile = (props) => {
@@ -21,7 +22,7 @@ const StudentProfile = (props) => {
         return state.user
     })
     const getAllSubmitted = (id) => {
-        axios.get(`http://localhost:3044/api/answers/students/${id}`)
+        axios.get(`/answers/students/${id}`)
             .then(response => {
                 const result = response.data
                 if (result.hasOwnProperty('errors')) {

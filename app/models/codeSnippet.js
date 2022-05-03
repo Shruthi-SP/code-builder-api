@@ -18,7 +18,7 @@ const codeSnippetSchema = new Schema({
             group: {
                 type: String,
                 required: [true, 'group is required'],
-                enum: ['input', 'texts', 'break', 'tab', 'doubleTab', 'space', 'submit']
+                enum: ['input', 'texts', 'break', 'tab', 'doubleTab', 'space', 'submit', 'control']
             },
             hint: {
                 type: String

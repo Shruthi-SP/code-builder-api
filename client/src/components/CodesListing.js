@@ -35,8 +35,8 @@ const CodesListing = (props) => {
                     array.map((ele, i) => {
                         return <Box width='100%' sx={{ border: 1, borderColor: 'error.main', borderRadius: 2, mb: 2, p: 2 }} key={i}>
                             <>
-                                <Typography variant="h6" >{ele.title}</Typography>
-                                <Typography variant="h6">{i + 1}. {ele.statement}</Typography>
+                                <Typography variant="h6" >{i + 1}. {ele.title}</Typography>
+                                <Typography variant="h6"> {ele.statement}</Typography>
                                 {admin && <CodeItem snippets={ele.snippets} />}
                                 <br /><Link to={`/codes/${ele._id}`}>{admin ? 'Show' : 'Solve'}</Link><br />
                             </>

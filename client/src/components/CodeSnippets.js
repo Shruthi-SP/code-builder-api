@@ -18,6 +18,7 @@ import Explanations from "./Explanations"
 import Hint from "./Hints"
 import { withRouter } from "react-router-dom"
 import Swal from 'sweetalert2'
+import Control from "./tools/Control"
 
 const CodeSnippets = (props) => {
     const user = useSelector(state => {
@@ -90,24 +91,24 @@ const CodeSnippets = (props) => {
 
     const handleHintFocusEnter = (e, hint) => {
         setHintFocus(true)
-        console.log('hint enter=', hint)
-        const obj = arraySnippet.find(ele=>ele.hints.find(e=>e.hint===hint))
-        console.log(obj)
-        if(obj){
+        //console.log('hint enter=', hint)
+        const obj = arraySnippet.find(ele => ele.hints.find(e => e.hint === hint))
+        //console.log(obj)
+        if (obj) {
             setFocusedObj(obj)
         }
     }
     const handleHintFocusLeave = (e, hint) => {
         setHintFocus(false)
         setFocusedObj({})
-        console.log('hint leave=', hint)
+        //console.log('hint leave=', hint)
     }
     const handleInputFocusEnter = (e, ele) => {
         setIsFocused(true)
         //console.log('focus enter=', ele)
         const arrHin = []
-        ele.hints.forEach(e=>{
-            if(studHints.includes(e.hint)){
+        ele.hints.forEach(e => {
+            if (studHints.includes(e.hint)) {
                 arrHin.push(e.hint)
             }
         })
@@ -201,8 +202,8 @@ const CodeSnippets = (props) => {
         e.preventDefault()
         setStart(!start)
         setPrev(true)
-        const a = obj.snippets.find(ele => ele.group === 'break')
-        const index = obj.snippets.findIndex(ele => ele.group === 'break')
+        const a = obj.snippets.find(ele => ele.group === 'control')
+        const index = obj.snippets.findIndex(ele => ele.group === 'control')
         const h = getHints(obj.snippets.slice(0, index + 1))
         setStudHints(h)
         setCount(index + 1)
@@ -212,7 +213,7 @@ const CodeSnippets = (props) => {
         e.preventDefault()
         setPrev(false)
         if (count < obj.snippets.length) {
-            const o = obj.snippets.slice(count).find(ele => ele.group === 'break')
+            const o = obj.snippets.slice(count).find(ele => ele.group === 'control')
             if (o) {
                 //let index = a.id + 1
                 const a = obj.snippets.findIndex(ele => ele._id === o._id)
@@ -239,7 +240,7 @@ const CodeSnippets = (props) => {
         const arr = [...obj.snippets].reverse()
         if (count > 0) {
             //const a = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'input')
-            const o = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'break')
+            const o = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'control')
             if (o) {
                 //let index = a.id + 1
                 const a = obj.snippets.findIndex(ele => ele._id === o._id)
@@ -317,6 +318,8 @@ const CodeSnippets = (props) => {
             return <Submit />
         } else if (ele.group === 'input') {
             return <Input ele={ele} isSubmitted={isSubmitted} handleInputChange={handleInputChange} handleInputBlur={handleInputBlur} handleInputFocusEnter={handleInputFocusEnter} handleInputFocusLeave={handleInputFocusLeave} hintFocus={hintFocus} focusedObj={focusedObj} />
+        } else if (ele.group === 'control') {
+            return <Control />
         }
     }
     const buildForSolution = (ele) => {
@@ -334,6 +337,8 @@ const CodeSnippets = (props) => {
             return <Submit />
         } else if (ele.group === 'input') {
             return ele.answer
+        } else if (ele.group === 'control') {
+            return <Control />
         }
     }
 
@@ -350,7 +355,7 @@ const CodeSnippets = (props) => {
                         : <div>
                             {
                                 codeToggle ? <EditCode code={obj} handleEditCode={handleEditCode} handleCancelCode={handleCancelCode} /> : <>
-                                    <code><b>Title: {obj.title}</b><br /></code>
+                                    <h3><code>Title: {obj.title}</code></h3><br />
                                     <code><b>Statement: {obj.statement}</b></code><br />
                                 </>
                             }
@@ -391,10 +396,12 @@ const CodeSnippets = (props) => {
                 <Grid container>
                     <Grid item xs={12} sm={6}>
                         <div>
-                            <code>
+                            {/* <code>
                                 <b>{obj.title}</b><br />
                                 <b>{obj.statement}</b><br />
-                            </code>
+                            </code> */}
+                            <h3 style={{margin:'0px'}}><code>Title: {obj.title}</code></h3>
+                            <h4 style={{margin:'0px'}}><code>Statement: {obj.statement}</code></h4>
                             <Box sx={{ m: 1, ml: 0 }}>
                                 <Paper elevation={3} sx={{ p: 1, backgroundColor: '#F8F9F9' }}>
                                     {start && <Button variant="contained" size="small" onClick={(e) => { handleStart(e) }}>start</Button>}
