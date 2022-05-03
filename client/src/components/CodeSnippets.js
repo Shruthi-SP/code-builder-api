@@ -160,7 +160,7 @@ const CodeSnippets = (props) => {
             score: str
         }
         if (!admin) {
-            axios.post('http://localhost:3044/api/answers', formData)
+            axios.post('/answers', formData)
                 .then(response => {
                     if (response.hasOwnProperty('errors')) {
                         //alert(errors.message)
