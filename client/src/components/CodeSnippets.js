@@ -8,7 +8,7 @@ import { Button, ButtonGroup, Typography, Grid, Box, Paper } from "@mui/material
 import { Delete, Edit, Add } from "@mui/icons-material"
 import ErrorBoundary from "./ErrorBoundary"
 import axios from "axios"
-//import CodeSolution from "./CodeSolution"
+import CodeSolution from "./CodeSolution"
 import Input from "./tools/Input"
 import Break from "./tools/Break"
 import Space from "./tools/Space"
@@ -212,6 +212,20 @@ const CodeSnippets = (props) => {
     const handleNext = (e) => {
         e.preventDefault()
         setPrev(false)
+        //console.log('count=', count)
+        if (count + 1 < obj.snippets.length) {
+            const ob = obj.snippets[count + 1]
+            if (ob.displayOrder < ob.id) {
+                //console.log('inside handle nxt', obj.snippets[count])
+                const sortA = [...obj.snippets].sort((a, b) => a.displayOrder - b.displayOrder)
+                //console.log('sortA', sortA)
+                setArraySnippet(sortA)
+                setCount(count + 1)
+                const h = getHints(sortA.slice(0, count + 1))
+                setStudHints(h)
+                setCount(count + 1)
+            }
+        }
         if (count < obj.snippets.length) {
             const o = obj.snippets.slice(count).find(ele => ele.group === 'control')
             if (o) {
@@ -355,16 +369,11 @@ const CodeSnippets = (props) => {
                         : <div>
                             {
                                 codeToggle ? <EditCode code={obj} handleEditCode={handleEditCode} handleCancelCode={handleCancelCode} /> : <>
-                                    <h3><code>Title: {obj.title}</code></h3><br />
+                                    <h3 style={{ margin: '0px' }}><code>Title: {obj.title}</code></h3>
                                     <code><b>Statement: {obj.statement}</b></code><br />
                                 </>
                             }
                             {
-                                // arraySnippet.length > 0 && arraySnippet.map((ele, i) => {
-                                //     return <code key={i}>
-                                //         {buildFor(ele)}
-                                //     </code>
-                                // })
                                 arraySnippet.length > 0 && <Box sx={{ width: '50%', m: 1 }}>
                                     <h4 style={{ margin: '3px' }}>Code</h4>
                                     <Paper elevation={3} sx={{ p: 1, backgroundColor: '#F8F9F9' }} >
@@ -396,12 +405,8 @@ const CodeSnippets = (props) => {
                 <Grid container>
                     <Grid item xs={12} sm={6}>
                         <div>
-                            {/* <code>
-                                <b>{obj.title}</b><br />
-                                <b>{obj.statement}</b><br />
-                            </code> */}
-                            <h3 style={{margin:'0px'}}><code>Title: {obj.title}</code></h3>
-                            <h4 style={{margin:'0px'}}><code>Statement: {obj.statement}</code></h4>
+                            <h3 style={{ margin: '0px' }}><code>Title: {obj.title}</code></h3>
+                            <h4 style={{ margin: '0px' }}><code>Statement: {obj.statement}</code></h4>
                             <Box sx={{ m: 1, ml: 0 }}>
                                 <Paper elevation={3} sx={{ p: 1, backgroundColor: '#F8F9F9' }}>
                                     {start && <Button variant="contained" size="small" onClick={(e) => { handleStart(e) }}>start</Button>}
@@ -409,6 +414,7 @@ const CodeSnippets = (props) => {
                                         <div style={{ margin: '5px' }}>
                                             <form onSubmit={(e) => { handleSubmitAns(e) }}>
                                                 {obj.hasOwnProperty('snippets') &&
+
                                                     arraySnippet.slice(0, count).map((ele, i) => {
                                                         return <code key={i}>{buildForStudent(ele)}</code>
                                                     })
@@ -423,27 +429,19 @@ const CodeSnippets = (props) => {
                                 </Paper>
                             </Box>
                         </div>
+
                         {errors.length > 0 && <ul>{
                             errors.map((ele, i) => {
                                 return <li style={{ color: 'red' }} key={i}>{ele}</li>
                             })
                         }</ul>}
+
                         <h3>{string}</h3>
+
                         {(isSubmitted || admin) && <button onClick={() => { handleSolution() }}>See Solution</button>}
-                        {/* {(solution || admin) && <ErrorBoundary><CodeSolution codeId={props.codeId} obj={obj} handleSolution={handleSolution} admin={admin} /></ErrorBoundary>} */}
-                        {(solution) && <div>
-                            <h3>Code Solution</h3>
-                            <code>
-                                <b>{obj.title}</b><br />
-                                <b>{obj.statement}</b><br />
-                                {
-                                    obj.snippets.slice(0, obj.snippets.length - 1).map(ele => {
-                                        return <code key={ele._id}>{buildForSolution(ele)}</code>
-                                    })
-                                }
-                            </code>
-                            <br /><button onClick={() => { handleSolution() }}>Close</button>
-                        </div>}
+
+                        {(solution || admin) && <ErrorBoundary><CodeSolution codeId={props.codeId} obj={obj} handleSolution={handleSolution} admin={admin} /></ErrorBoundary>}
+
                         {(isSubmitted || admin) && <Explanations explanations={explanations} />}
                     </Grid>
                     <Grid item xs={12} sm={6}>

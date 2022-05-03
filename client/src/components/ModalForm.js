@@ -14,16 +14,24 @@ const ModalForm = (props) => {
     const {length, open,handleClose, codeId, snippet, handleCancelEdit} = props
     const dispatch = useDispatch()
 
-    const [editLimit, setEditLimit] = useState('')
+    //const [editLimit, setEditLimit] = useState('')
+    const [editDisplayOrder, setEditDisplayOrder] = useState(snippet.displayOrder)
 
     const formSubmission = (formData) => {
         dispatch(asyncUpdateSnippet(codeId, snippet._id, formData))
         handleCancelEdit()
     }
-    const handleSetLimit = (e) => {
+    // const handleSetLimit = (e) => {
+    //     e.preventDefault()
+    //     const formData = {
+    //         limit: editLimit
+    //     }
+    //     formSubmission(formData)
+    // }
+    const handleSetDisplayOrder = (e) => {
         e.preventDefault()
         const formData = {
-            limit: editLimit
+            displayOrder: editDisplayOrder
         }
         formSubmission(formData)
     }
@@ -37,8 +45,8 @@ const ModalForm = (props) => {
 
                     {snippet.group === 'input' && <FromInput length={length} {...snippet} formSubmission={formSubmission} handleCancelEdit={handleCancelEdit} />}
 
-                    {snippet.group === 'break' && <><TextField label='Enter limit here' variant='outlined' type='text' value={editLimit} placeholder="Change Limit" onChange={(e) => { setEditLimit(e.target.value) }} /><br /><br />
-                        <Button sx={{ mr: 1 }} variant="contained" size="small" onClick={handleSetLimit}>Set</Button>
+                    {(snippet.group === 'break' || snippet.group === 'space' || snippet.group === 'tab' || snippet.group === 'doubleTab' || snippet.group === 'submit' || snippet.group === 'control') && <><TextField label='Enter display order here' variant='outlined' type='text' value={editDisplayOrder} placeholder="Change display order" onChange={(e) => { setEditDisplayOrder(e.target.value) }} /><br /><br />
+                        <Button sx={{ mr: 1 }} variant="contained" size="small" onClick={handleSetDisplayOrder}>Set</Button>
                         <Button variant="contained" size="small" onClick={() => { handleCancelEdit() }}>Cancel</Button></>}
 
                 </DialogContent>

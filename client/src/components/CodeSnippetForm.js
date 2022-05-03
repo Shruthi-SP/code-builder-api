@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import axios from "axios"
+// import axios from "axios"
+import axios from '../config/axios-config'
 import RLDD from 'react-list-drag-and-drop/lib/RLDD'
 import AddSnippet from "./AddSnippet"
 //import EditSnippet from './EditSnippet'
@@ -126,32 +127,32 @@ const CodeSnippetForm = (props) => {
     const handleInsertBreak = (e) => {
         e.preventDefault()
         setLimit(limit + 1)
-        const obj = { group: 'break', limit: limit + 1, id: arraySnippet.length }
+        const obj = { group: 'break', limit: limit + 1, id: arraySnippet.length, displayOrder: arraySnippet.length + 1 }
         dispatch(asyncAddSnippet(props.codeId, obj))
     }
     const handleInsertTab = (e) => {
         e.preventDefault()
-        const obj = { group: 'tab', id: arraySnippet.length }
+        const obj = { group: 'tab', id: arraySnippet.length, displayOrder: arraySnippet.length + 1 }
         dispatch(asyncAddSnippet(props.codeId, obj))
     }
     const handleInsertDoubleTab = (e) => {
         e.preventDefault()
-        const obj = { group: 'doubleTab', id: arraySnippet.length }
+        const obj = { group: 'doubleTab', id: arraySnippet.length, displayOrder: arraySnippet.length + 1 }
         dispatch(asyncAddSnippet(props.codeId, obj))
     }
     const handleInsertSpace = (e) => {
         e.preventDefault()
-        const obj = { group: 'space', id: arraySnippet.length }
+        const obj = { group: 'space', id: arraySnippet.length, displayOrder: arraySnippet.length + 1 }
         dispatch(asyncAddSnippet(props.codeId, obj))
     }
     const handleInsertSubmit = (e) => {
         e.preventDefault()
-        const obj = { group: 'submit', id: arraySnippet.length }
+        const obj = { group: 'submit', id: arraySnippet.length, displayOrder: arraySnippet.length + 1 }
         dispatch(asyncAddSnippet(props.codeId, obj))
     }
     const handleInsertControl = (e) => {
         e.preventDefault()
-        const obj = { group: 'control', id: arraySnippet.length }
+        const obj = { group: 'control', id: arraySnippet.length, displayOrder: arraySnippet.length + 1 }
         dispatch(asyncAddSnippet(props.codeId, obj))
     }
     //------------------------Submit Answers---------------------
@@ -177,12 +178,12 @@ const CodeSnippetForm = (props) => {
             score: str
         }
         if (user.role === 'student') {
-            axios.post('http://localhost:3044/api/answers', formData)
+            axios.post('/answers', formData)
                 .then(response => {
                     alert('submitted successfully')
                 })
                 .catch(err => {
-                    alert('catch blk', err.message)
+                    alert(err.message)
                 })
         }
 
@@ -256,17 +257,12 @@ const CodeSnippetForm = (props) => {
                                         itemRenderer={(item) => {
                                             return (
                                                 <li>
-                                                    <code>{buildFor(item)}
-                                                        {
-                                                            (<>
-                                                                {
-                                                                    (item.group === 'texts' || item.group === 'input' || item.group === 'break') && <IconButton variant="outlined" color="primary" size="small" onClick={(e) => { handleEdit(e, item) }}>
-                                                                        <Edit />
-                                                                    </IconButton>
-                                                                }
-                                                            </>)
-                                                        }
+                                                    <code>{buildFor(item)}{' -> '}{item.displayOrder} 
+
+                                                        <IconButton variant="outlined" color="primary" size="small" onClick={(e) => { handleEdit(e, item) }}><Edit /></IconButton>
+
                                                         <IconButton variant="outlined" color="error" size="small" onClick={(e) => { handleRemove(e, item) }}><Delete /></IconButton>
+                                                        
                                                     </code>
                                                 </li>
                                             );

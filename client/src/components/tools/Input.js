@@ -6,14 +6,19 @@ const Input = (props) => {
 
     const handleMouseEnter = (e, ele) => {
         setHighlight(true)
-        handleInputFocusEnter(e, ele)
+        if (handleInputFocusEnter) {
+            handleInputFocusEnter(e, ele)
+        }
+
     }
     const handleMouseLeave = (e, ele) => {
         setHighlight(false)
-        handleInputFocusLeave(e, ele)
+        if (handleInputFocusLeave) {
+            handleInputFocusLeave(e, ele)
+        }
     }
     return <input
-        style={{ width: ((ele.answer.length) * 6 + 1) + 'px', border: ((highlight || (hintFocus && ele.id===focusedObj.id)) && '2px solid blue') || (isSubmitted ? (ele.answer === ele.value ? '2px solid green' : '2px solid red') : '1px solid black') }}
+        style={{ width: ((ele.answer.length) * 6 + 1) + 'px', border: ((highlight || (hintFocus && ele.id === focusedObj.id)) && '2px solid blue') || (isSubmitted ? (ele.answer === ele.value ? '2px solid green' : '2px solid red') : '1px solid black') }}
         type='text'
         name='inputText'
         value={ele.value}
