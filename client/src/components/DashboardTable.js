@@ -35,12 +35,12 @@ const DashboardTable = (props) => {
   // })
 
   const getStudentName = (id) => {
-    const student = members.find(ele => ele.id === id)
+    const student = members.find(ele => ele.id == id)
     //console.log('get student name=',student)
     return student ? student.user_name : 'anonymous'
   }
   const getCodeTitle = (id) => {
-    const code = codes.data.find(ele => ele._id === id)
+    const code = codes.data.find(ele => ele._id == id)
     //console.log('get code', code)
     return code ? code.statement : 'This code no longer exist.'
   }
