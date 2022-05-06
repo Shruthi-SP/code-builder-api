@@ -8,7 +8,7 @@ import Submit from "./tools/Submit"
 import Tab from "./tools/Tab"
 import CodeSolution from "./CodeSolution"
 import { Grid } from "@mui/material"
-import CodeStepper from "./CodeStepper"
+//import CodeStepper from "./CodeStepper"
 import ErrorBoundary from "./ErrorBoundary"
 import Explanations from "./Explanations"
 
@@ -51,7 +51,7 @@ const ShowCode = (props) => {
     const [code, setCode] = useState(codeSnippet || {})
     const [hints, setHints] = useState([])
     const [solution, setSolution] = useState(false)
-    const [activeStep, setActiveStep] = useState(0);
+    //const [activeStep, setActiveStep] = useState(0);
     const [explanations, setExplanations] = useState([])
 
     useEffect(() => {
@@ -65,8 +65,8 @@ const ShowCode = (props) => {
         else throw new Error('I ShowCode crashed! Code is {}');
     }, [codeSnippet])
 
-    const steps = [], hintsArr = []
-    let count = 1, start = 0
+    // const steps = [], hintsArr = []
+    // let count = 1, start = 0
     //--------------------------horizontal stepper------------------------
     // codeObj.snippets.forEach((ele, i) => {
     //     //let end = i
@@ -80,28 +80,28 @@ const ShowCode = (props) => {
     // })
 
     //-------------------------vertical stepper---------------------------
-    code.snippets.forEach((ele, i) => {
-        let obj = {}
-        if (ele.group === 'input') {
-            obj.label = `input-${count}`
-            obj.description = getHints(code.snippets.slice(start, i + 1))
-            count++
-            steps.push(obj)
-            start = i + 1
-        }
-    })
+    // code.snippets.forEach((ele, i) => {
+    //     let obj = {}
+    //     if (ele.group === 'input') {
+    //         obj.label = `input-${count}`
+    //         obj.description = getHints(code.snippets.slice(start, i + 1))
+    //         count++
+    //         steps.push(obj)
+    //         start = i + 1
+    //     }
+    // })
 
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    };
+    // const handleNext = () => {
+    //     setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    // };
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+    // const handleBack = () => {
+    //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    // };
 
-    const handleReset = () => {
-        setActiveStep(0);
-    };
+    // const handleReset = () => {
+    //     setActiveStep(0);
+    // };
 
     const handleSolution = () => {
         handleIsSubmit()

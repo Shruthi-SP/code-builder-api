@@ -11,7 +11,7 @@ import FromInput from "./FormInput"
 import FormText from './FormText'
 
 const ModalForm = (props) => {
-    const {length, open,handleClose, codeId, snippet, handleCancelEdit} = props
+    const { length, open, handleClose, codeId, snippet, handleCancelEdit } = props
     const dispatch = useDispatch()
 
     //const [editLimit, setEditLimit] = useState('')
@@ -45,7 +45,9 @@ const ModalForm = (props) => {
 
                     {snippet.group === 'input' && <FromInput length={length} {...snippet} formSubmission={formSubmission} handleCancelEdit={handleCancelEdit} />}
 
-                    {(snippet.group === 'break' || snippet.group === 'space' || snippet.group === 'tab' || snippet.group === 'doubleTab' || snippet.group === 'submit' || snippet.group === 'control') && <><TextField label='Enter display order here' variant='outlined' type='text' value={editDisplayOrder} placeholder="Change display order" onChange={(e) => { setEditDisplayOrder(e.target.value) }} /><br /><br />
+                    {(snippet.group === 'break' || snippet.group === 'space' || snippet.group === 'tab' || snippet.group === 'doubleTab' || snippet.group === 'submit' || snippet.group === 'control') && <>
+                        <TextField sx={{mt:2}} label='Enter display order here' variant='outlined' type='text' value={editDisplayOrder} placeholder="Change display order" onChange={(e) => { setEditDisplayOrder(e.target.value) }} /><br /><br />
+
                         <Button sx={{ mr: 1 }} variant="contained" size="small" onClick={handleSetDisplayOrder}>Set</Button>
                         <Button variant="contained" size="small" onClick={() => { handleCancelEdit() }}>Cancel</Button></>}
 

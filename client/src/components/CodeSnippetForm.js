@@ -10,9 +10,10 @@ import ShowCode from "./ShowCode"
 import { asyncAddSnippet, asyncDeleteSnippet, asyncUpdateCode } from '../actions/codesAction'
 import { arrToDd } from "./tools/helper"
 import ModalForm from "./ModalForm"
-import { Button, IconButton, Grid, Typography } from "@mui/material"
+import { Button, IconButton, Grid, Typography, Dialog, DialogActions, DialogContent } from "@mui/material"
 import { Delete, Edit, ArrowBackIos } from "@mui/icons-material"
 import ErrorBoundary from "./ErrorBoundary"
+
 
 const CodeSnippetForm = (props) => {
 
@@ -51,11 +52,12 @@ const CodeSnippetForm = (props) => {
     const [show, setShow] = useState(false)
     const [string, setString] = useState('')
     const [errors, setErrors] = useState([])
-    const [snipId, setSnipId] = useState('')
+    //const [snipId, setSnipId] = useState('')
     const [snip, setSnip] = useState({})
     const [editToggle, setEditToggle] = useState(false)
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [open, setOpen] = useState(false);
+    const [remove, setRemove] = useState(false)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -70,6 +72,7 @@ const CodeSnippetForm = (props) => {
     }
 
     const handleRLDDChange = (newItems) => {
+        console.log('new rldd=', newItems)
         const formData = {
             snippets: [...newItems]
         }
@@ -194,7 +197,7 @@ const CodeSnippetForm = (props) => {
     //-------------------------end of submit ans-----------------------------------------
     const handleEdit = (e, ele) => {
         e.preventDefault()
-        setSnipId(ele._id)
+        //setSnipId(ele._id)
         setSnip(ele)
         setEditToggle(true)
         handleClickOpen()
@@ -204,10 +207,18 @@ const CodeSnippetForm = (props) => {
         setArraySnippet(array)
     }
     const handleRemove = (e, ele) => {
-        e.preventDefault()
-        dispatch(asyncDeleteSnippet(props.codeId, ele._id))
-        setArraySnippet(array)
+        setSnip(ele)
+        setRemove(true)
     }
+    const handleYes = () => {
+        dispatch(asyncDeleteSnippet(props.codeId, snip._id))
+        setArraySnippet(array)
+        setRemove(false)
+    }
+    const handleCloseSnip = () => {
+        setRemove(false)
+    }
+
 
     const buttons = [
         <Button variant="contained" color="secondary" size="small" sx={{ borderRadius: 10, m: 1 }} onClick={handleCreateTexts}>Insert Text</Button>,
@@ -257,12 +268,12 @@ const CodeSnippetForm = (props) => {
                                         itemRenderer={(item) => {
                                             return (
                                                 <li>
-                                                    <code>{buildFor(item)}{' -> '}{item.displayOrder} 
+                                                    <code>{buildFor(item)}{' -> '}{item.displayOrder}
 
                                                         <IconButton variant="outlined" color="primary" size="small" onClick={(e) => { handleEdit(e, item) }}><Edit /></IconButton>
 
                                                         <IconButton variant="outlined" color="error" size="small" onClick={(e) => { handleRemove(e, item) }}><Delete /></IconButton>
-                                                        
+
                                                     </code>
                                                 </li>
                                             );
@@ -283,9 +294,13 @@ const CodeSnippetForm = (props) => {
                             <Button variant="contained" startIcon={<ArrowBackIos />} size="small" onClick={() => { props.handleEditSnippets() }}>Back</Button>
                         </Grid>
                         }
-                        {Object.keys(codeObj).length > 0 && <Grid item xs={8}>
+                        {Object.keys(codeObj).length > 0 && <Grid item xs={8} >
                             <ErrorBoundary><ShowCode admin={admin} isSubmitted={isSubmitted} codeObj={codeObj} handleIsSubmit={handleIsSubmit} codeId={props.codeId} handleSubmitAns={handleSubmitAns} errors={errors} string={string} handleInputChange={handleInputChange} handleInputBlur={handleInputBlur} handlePreviewCode={handlePreviewCode} /></ErrorBoundary>
                         </Grid>}
+                        {remove && <Dialog open={remove} onClose={handleCloseSnip}>
+                            <DialogContent>Are you sure want to delete?</DialogContent>
+                            <DialogActions><Button onClick={handleYes}>Yes</Button><Button onClick={handleCloseSnip}>No</Button></DialogActions>
+                        </Dialog>}
                     </Grid>
             }
         </>

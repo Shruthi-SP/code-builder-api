@@ -15,6 +15,9 @@ const StudentProfile = (props) => {
     const [score, setScore] = useState({})
     const [answers, setAnswers] = useState([])
 
+    const members = useSelector(state=>{
+        return state.members
+    })
     const codes = useSelector(state => {
         return state.codes.data
     })
@@ -48,7 +51,7 @@ const StudentProfile = (props) => {
     useEffect(() => {
         if (user.role === 'admin') {
             getAllSubmitted(props.match.params.id)
-            const s = array.find(ele => ele.id == props.match.params.id)
+            const s = members.find(ele => ele.id == props.match.params.id)
             //console.log(s)
             setStudent(s)            
         }

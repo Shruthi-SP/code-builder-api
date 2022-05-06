@@ -24,14 +24,14 @@ export const buildFor = (ele) => {
     }
 }
 export const arrToDd = (arr) => {
-    const a = arr.map((ele,i)=>{
-        return {...ele, id:i}
+    const a = arr.map((ele, i) => {
+        return { ...ele, id: i}
     })
     return a
 }
 export const ddToArr = (arr) => {
     let ar = [...arr]
-    const a = ar.map(ele=>{
+    const a = ar.map(ele => {
         delete ele.id
         return ele
     })

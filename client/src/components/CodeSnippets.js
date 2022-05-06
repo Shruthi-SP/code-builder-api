@@ -4,10 +4,9 @@ import CodeSnippetForm from "./CodeSnippetForm"
 import { buildFor } from "./tools/helper"
 import { asyncDeleteCode, asyncGetCode } from "../actions/codesAction"
 import EditCode from "./EditCode"
-import { Button, ButtonGroup, Typography, Grid, Box, Paper } from "@mui/material"
+import { Button, ButtonGroup, Typography, Grid, Box, Paper, Dialog, DialogActions, DialogContent } from "@mui/material"
 import { Delete, Edit, Add } from "@mui/icons-material"
 import ErrorBoundary from "./ErrorBoundary"
-//import axios from "axios"
 import axios from "../config/axios-config"
 import CodeSolution from "./CodeSolution"
 import Input from "./tools/Input"
@@ -49,6 +48,8 @@ const CodeSnippets = (props) => {
     const [arrHints, setArrHints] = useState([])
     const [hintFocus, setHintFocus] = useState(false)
     const [focusedObj, setFocusedObj] = useState({})
+    const [remove, setRemove] = useState(false)
+    const [points, setPoints] = useState(0)
 
     const handlePreview = (e) => {
         setPreview(!preview)
@@ -60,8 +61,10 @@ const CodeSnippets = (props) => {
             let cs = JSON.parse(localStorage.getItem(_id))
             if (cs && cs.length > 0) {
                 setArraySnippet(cs)
+                setPoints(cs.filter(ele=>ele.group=='input').length)
             } else {
                 setArraySnippet(object.snippets)
+                setPoints(object.snippets.filter(ele=>ele.group==='input').length)
             }
             const h = getHints(object.snippets)
             setHints(h)
@@ -292,8 +295,18 @@ const CodeSnippets = (props) => {
         setCodeToggle(false)
     }
     const handleRemoveCode = (e) => {
-        dispatch(asyncDeleteCode(_id, redirect))
+        setRemove(true)
+        //dispatch(asyncDeleteCode(_id, redirect))
     }
+
+    const handleYes = () => {
+        dispatch(asyncDeleteCode(_id, redirect))
+        setRemove(false)
+    }
+    const handleClose = () => {
+        setRemove(false)
+    }
+
     const getHints = (a) => {
         const ar = []
         a.forEach(ele => {
@@ -364,7 +377,6 @@ const CodeSnippets = (props) => {
                     <h3>Admin view</h3>
                     <Typography variant="h5" color="primary.dark">Code and Snippets</Typography>
                     {snippetToggle ? <>
-                        <h3>Admin create snippet form</h3>
                         <ErrorBoundary><CodeSnippetForm admin={admin} codeId={_id} {...props} obj={obj} handleEditSnippets={handleEditSnippets} /></ErrorBoundary>
                     </>
                         : <div>
@@ -372,6 +384,7 @@ const CodeSnippets = (props) => {
                                 codeToggle ? <EditCode code={obj} handleEditCode={handleEditCode} handleCancelCode={handleCancelCode} /> : <>
                                     <h3 style={{ margin: '0px' }}><code>Title: {obj.title}</code></h3>
                                     <code><b>Statement: {obj.statement}</b></code><br />
+                                    <code><b>Points: {obj.snippets.filter(ele=>ele.group==='input').length}</b></code><br />
                                 </>
                             }
                             {
@@ -395,12 +408,16 @@ const CodeSnippets = (props) => {
                                 <Button startIcon={<><Edit /><Add /></>} onClick={handleEditSnippets}>Snippets</Button>
                             </ButtonGroup><br />
                             <Button onClick={handlePreview}>{preview ? 'Close Preview' : 'Show Preview'}</Button>
+                            {remove && <Dialog open={remove} onClose={handleClose}>
+                                <DialogContent>Are you sure want to delete?</DialogContent>
+                                <DialogActions><Button onClick={(e) => { handleYes(e) }}>Yes</Button><Button onClick={handleClose}>No</Button></DialogActions>
+                            </Dialog>}
                         </div>
                     }
                 </div>
             }
             {(!admin || preview) && <div>
-                <h3>{admin ? 'Student view' : 'Code'}</h3>
+                <h3>{admin ? 'Student view' : 'Solve'}</h3>
                 {/* <h2>Sibling of CodeSnippetForm component</h2> */}
                 {/* <span>Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering, in lifecycle methods, and in constructors of the whole tree below them.</span><br /> */}
                 <Grid container>
@@ -408,6 +425,7 @@ const CodeSnippets = (props) => {
                         <div>
                             <h3 style={{ margin: '0px' }}><code>Title: {obj.title}</code></h3>
                             <h4 style={{ margin: '0px' }}><code>Statement: {obj.statement}</code></h4>
+                            <h5 style={{ margin: '0px' }}><code>Points: {points}</code></h5>
                             <Box sx={{ m: 1, ml: 0 }}>
                                 <Paper elevation={3} sx={{ p: 1, backgroundColor: '#F8F9F9' }}>
                                     {start && <Button variant="contained" size="small" onClick={(e) => { handleStart(e) }}>start</Button>}
