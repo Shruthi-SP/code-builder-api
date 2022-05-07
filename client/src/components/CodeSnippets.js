@@ -50,6 +50,7 @@ const CodeSnippets = (props) => {
     const [focusedObj, setFocusedObj] = useState({})
     const [remove, setRemove] = useState(false)
     const [points, setPoints] = useState(0)
+    const [hintNum, setHintNum] = useState(0)
 
     const handlePreview = (e) => {
         setPreview(!preview)
@@ -93,18 +94,21 @@ const CodeSnippets = (props) => {
         }
     }
 
-    const handleHintFocusEnter = (e, hint) => {
+    const handleHintFocusEnter = (e, hint, num) => {
         setHintFocus(true)
-        //console.log('hint enter=', hint)
+        //console.log('hint enter=')
         const obj = arraySnippet.find(ele => ele.hints.find(e => e.hint === hint))
         //console.log(obj)
         if (obj) {
             setFocusedObj(obj)
+            const hintInd = studHints.findIndex(ele=>ele===hint)
+            setHintNum(hintInd+1)
         }
     }
     const handleHintFocusLeave = (e, hint) => {
         setHintFocus(false)
         setFocusedObj({})
+        setHintNum(0)
         //console.log('hint leave=', hint)
     }
     const handleInputFocusEnter = (e, ele) => {
@@ -114,6 +118,7 @@ const CodeSnippets = (props) => {
         ele.hints.forEach(e => {
             if (studHints.includes(e.hint)) {
                 arrHin.push(e.hint)
+                setHintNum(studHints.indexOf(e.hint)+1)
             }
         })
         //console.log(arrHin)
@@ -121,6 +126,7 @@ const CodeSnippets = (props) => {
     }
     const handleInputFocusLeave = (e, ele) => {
         setIsFocused(false)
+        setHintNum(0)
         //console.log('focus leave=', ele)
     }
 
@@ -343,9 +349,9 @@ const CodeSnippets = (props) => {
         } else if (ele.group === 'space') {
             return <Space />
         } else if (ele.group === 'submit') {
-            return <Submit />
+            return <Submit isSubmitted={isSubmitted} />
         } else if (ele.group === 'input') {
-            return <Input ele={ele} isSubmitted={isSubmitted} handleInputChange={handleInputChange} handleInputBlur={handleInputBlur} handleInputFocusEnter={handleInputFocusEnter} handleInputFocusLeave={handleInputFocusLeave} hintFocus={hintFocus} focusedObj={focusedObj} />
+            return <Input ele={ele} isSubmitted={isSubmitted} handleInputChange={handleInputChange} handleInputBlur={handleInputBlur} handleInputFocusEnter={handleInputFocusEnter} handleInputFocusLeave={handleInputFocusLeave} hintFocus={hintFocus} focusedObj={focusedObj} num={hintNum} />
         } else if (ele.group === 'control') {
             return <Control />
         }

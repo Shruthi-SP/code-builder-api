@@ -1,6 +1,7 @@
+import { Tooltip } from '@mui/material'
 import { useState } from 'react'
 const Input = (props) => {
-    const { isSubmitted, ele, handleInputChange, handleInputBlur, handleInputFocusEnter, handleInputFocusLeave, hintFocus, focusedObj } = props
+    const { isSubmitted, ele, handleInputChange, handleInputBlur, handleInputFocusEnter, handleInputFocusLeave, hintFocus, focusedObj, num } = props
 
     const [highlight, setHighlight] = useState(false)
     const [enter, setEnter] = useState(false)
@@ -18,7 +19,9 @@ const Input = (props) => {
             handleInputFocusLeave(e, ele)
         }
     }
-    return <input
+    return <>
+    <Tooltip title={num}>
+        <input
         style={{ width: ((ele.answer.length) * 6 + 1) + 'px', border: (enter && '2px solid #6da9df') || ((highlight || (hintFocus && ele.id === focusedObj.id)) && '2px solid blue') || (isSubmitted ? (ele.answer === ele.value ? '2px solid green' : '2px solid red') : '1px solid black'), cursor: highlight && 'default' }}
         type='text'
         name='inputText'
@@ -30,5 +33,7 @@ const Input = (props) => {
         onMouseLeave={(e) => { handleMouseLeave(e, ele) }}
         disabled={ele.isDisable}
     />
+    </Tooltip>
+    </>
 }
 export default Input

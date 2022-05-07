@@ -16,6 +16,7 @@ import CodeDashboard from "./CodeDashboard"
 import Swal from 'sweetalert2'
 import StudentProfile from "./StudentProfile"
 import Demo from "./Demo"
+import AdminRoute from "./tools/AdminRoute"
 
 const CodesContainer = (props) => {
     const [show, setShow] = useState(false)
@@ -98,13 +99,13 @@ const CodesContainer = (props) => {
                 return <Login {...props} handleLoggedIn={handleLoggedIn} handleCancelShow={handleLoggedIn} handleAdmin={handleAdmin} />
             }}></Route>
 
-            <PrivateRoute path='/codes' component={CodesListing} handleShow={handleShow} handleCancelShow={handleCancelShow} />
-            <PrivateRoute path='/students' component={StudentsListing} handleShow={handleShow} handleCancelShow={handleCancelShow} />
-            <PrivateRoute path='/create-code' component={AddCode} handleShow={handleShow} handleCancelShow={handleCancelShow} />
-            <PrivateRoute path='/codes/:id' component={CodeSnippets} />
-            <PrivateRoute path='/students/:id' component={StudentProfile} />
-            <PrivateRoute path='/dashboard' component={CodeDashboard} />
-            <PrivateRoute path='/demo' component={Demo} />
+            <PrivateRoute path='/codes' admin={admin} component={CodesListing} handleShow={handleShow} handleCancelShow={handleCancelShow} />
+            <PrivateRoute path='/students' admin={admin} component={StudentsListing} handleShow={handleShow} handleCancelShow={handleCancelShow} />
+            <AdminRoute path='/create-code' admin={admin} component={AddCode} handleShow={handleShow} handleCancelShow={handleCancelShow} />
+            <PrivateRoute path='/codes/:id' admin={admin} component={CodeSnippets} />
+            <PrivateRoute path='/students/:id' admin={admin} component={StudentProfile} />
+            <PrivateRoute path='/dashboard' admin={admin} component={CodeDashboard} />
+            <PrivateRoute path='/demo' admin={admin} component={Demo} />
         </Box>
     )
 }
