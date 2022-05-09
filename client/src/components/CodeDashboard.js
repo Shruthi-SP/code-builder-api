@@ -209,6 +209,7 @@ const CodeDashboard = (props) => {
                         //{...defaultProps}
                         sx={{ width: 300, m: 2, ml: 0 }}
                         value={statement}
+                        isOptionEqualToValue={(option, value) => option._id === value._id}
                         onChange={(event, newValue) => {
                             setStatement(newValue);
                         }}
@@ -232,8 +233,8 @@ const CodeDashboard = (props) => {
                 </Grid>}
                 <Button variant="contained" size="small" endIcon={<FastForward />} sx={{ mt: 2, ml: 2, p: 0, maxHeight: 52 }} onClick={handleGo}>Go</Button>
             </Grid>
-        {go && <>{(studentSpec.length > 0 ) ? <DashboardTable heading={`A student's attempt to specific question`} tableData={studentSpec} /> : <p>No answers yet</p>}</>}
-        {(go && admin) && <>{(studentsAll.length > 0) ? <DashboardTable heading={`All student's answer to specific question`} tableData={studentsAll} /> : <p>No answers yet from all students</p>}</>}
+        {(go && student) && <>{(studentSpec.length > 0 ) ? <DashboardTable heading={`${student.user_name} attempt to "${statement.statement}" question`} tableData={studentSpec} /> : <p>No answers yet from {student.user_name}</p>}</>}
+        {(go && admin && statement) && <>{(studentsAll.length > 0) ? <DashboardTable heading={`All student's answer to "${statement.statement}" question`} tableData={studentsAll} /> : <p>No answers yet from all students</p>}</>}
     </div>
 }
 export default CodeDashboard

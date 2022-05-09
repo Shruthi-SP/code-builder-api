@@ -25,8 +25,8 @@ const CodeItem = (props) => {
     }
 
     return (
-        <>
-            <Box sx={{ width: '50%' }} >
+        <>{
+            snippets.length > 0 && <Box sx={{ width: '50%' }} >
                 <h3 style={{ margin: '0px' }}>Code</h3>
                 <Paper elevation={3} sx={{ p: 1 }} >
                     {
@@ -36,7 +36,7 @@ const CodeItem = (props) => {
                     }
                 </Paper>
             </Box>
-        </>
+        }</>
     )
 }
 export default CodeItem
