@@ -11,6 +11,7 @@ import { Grid } from "@mui/material"
 //import CodeStepper from "./CodeStepper"
 import ErrorBoundary from "./ErrorBoundary"
 import Explanations from "./Explanations"
+import Control from "./tools/Control"
 
 const ShowCode = (props) => {
     const { admin, isSubmitted, handleIsSubmit, codeId, handleInputChange, handleInputBlur, handleSubmitAns, errors, string } = props
@@ -123,6 +124,8 @@ const ShowCode = (props) => {
             return <Submit />
         } else if (ele.group === 'input') {
             return <Input ele={ele} isSubmitted={isSubmitted} handleInputChange={handleInputChange} handleInputBlur={handleInputBlur} />
+        } else if (ele.group === 'control') {
+            return <Control />
         }
     }
 

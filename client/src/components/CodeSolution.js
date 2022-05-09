@@ -7,7 +7,6 @@ import Submit from "./tools/Submit"
 
 const CodeSolution = (props) => {
     const { codeId, obj, handleSolution, admin} = props
-    console.log('solun pros', props)
     const array = [...obj.snippets].sort((a, b) => a.displayOrder - b.displayOrder)
 
     if(Object.keys(obj).length === 0){

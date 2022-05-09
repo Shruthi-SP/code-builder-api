@@ -59,7 +59,7 @@ const StudentProfile = (props) => {
             setStudent(user)
             getAllSubmitted(user.id)
         }
-    }, [codes, user])
+    }, [codes, user, members])
     //console.log('student, chartdata, score, user, code ', student, chartData, score, user, codes)
 
     return <div>
@@ -83,7 +83,7 @@ const StudentProfile = (props) => {
                 </Grid>
             </Grid>
         </>}
-        {answers.length > 0 && <DashboardTable heading={`${student.user_name} answers to the questions attempted.`} tableData={answers} /> }
+        {(answers.length > 0 && student) && <DashboardTable heading={`${student.user_name} answers to the questions attempted.`} tableData={answers} /> }
     </div>
 }
 export default withRouter(StudentProfile)
