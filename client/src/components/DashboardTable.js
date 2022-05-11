@@ -6,11 +6,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { IconButton, Typography, Drawer } from '@mui/material';
+import { IconButton, Typography, Drawer, Grid, Button } from '@mui/material';
 //import { array } from '../actions/userAction';
 import { useSelector } from 'react-redux';
 import PreviewIcon from '@mui/icons-material/Preview';
 import StudentAnsView from './StudentAnsView';
+import CloseIcon from '@mui/icons-material/Close';
 
 const DashboardTable = (props) => {
   const { heading, tableData } = props
@@ -44,8 +45,8 @@ const DashboardTable = (props) => {
     setAnswer(obj)
   };
 
-  function createData(name, question, answers, score, view, id) {
-    return { name, question, answers, score, view, id };
+  function createData(name, question, score, view, id) {
+    return { name, question, score, view, id };
   }
 
   // const rows = tableData.map(ele => {
@@ -63,7 +64,7 @@ const DashboardTable = (props) => {
     return code ? code.statement : 'This code no longer exist.'
   }
   const rows = tableData.map(ele => {
-    return createData(user.role === 'admin' ? getStudentName(ele.studentId) : user.user_name, getCodeTitle(ele.codeId), ele.answers, ele.score, <IconButton variant="outlined" color="primary" size="small" disabled={!(codes.data.find(e => e._id === ele.codeId))} onClick={(e) => { toggleDrawer(e, 'bottom', true, ele) }}><PreviewIcon /></IconButton>, ele._id)
+    return createData(user.role === 'admin' ? getStudentName(ele.studentId) : user.user_name, getCodeTitle(ele.codeId), ele.score, <IconButton variant="outlined" color="primary" size="small" disabled={!(codes.data.find(e => e._id === ele.codeId))} onClick={(e) => { toggleDrawer(e, 'bottom', true, ele) }}><PreviewIcon /></IconButton>, ele._id)
   })
 
   function BasicTable() {
@@ -75,7 +76,6 @@ const DashboardTable = (props) => {
             <TableRow>
               <TableCell >Student Name</TableCell>
               <TableCell >Statement</TableCell>
-              <TableCell >Answers</TableCell>
               <TableCell >Score</TableCell>
               <TableCell >View your answer</TableCell>
             </TableRow>
@@ -85,11 +85,6 @@ const DashboardTable = (props) => {
               <TableRow key={row.id}>
                 <TableCell >{row.name}</TableCell>
                 <TableCell >{row.question}</TableCell>
-                <TableCell ><ul style={{ listStyleType: 'none', padding: '0px' }}>
-                  {row.answers.map((ele, i) => {
-                    return <li key={ele.snipId}>{ele.snipAnswer}</li>
-                  })}
-                </ul></TableCell>
                 <TableCell >{row.score}</TableCell>
                 <TableCell >{row.view}</TableCell>
               </TableRow>
@@ -101,8 +96,10 @@ const DashboardTable = (props) => {
   }
   return <>
     <BasicTable />
-    {(state.bottom && answer && code) && <Drawer sx={{ width: '300px' }} anchor='bottom' open={state['bottom']} onClose={(e) => toggleDrawer(e, 'bottom', false, null)}>
+    {(state.bottom && answer && code) && <Drawer anchor='bottom' open={state['bottom']} onClose={(e) => toggleDrawer(e, 'bottom', false, null)}>
+      <Button sx={{ display: 'flex', justifyContent: 'flex-end' }} onClick={(e) => { toggleDrawer(e, 'bottom', false, null) }}> <CloseIcon /> </Button>
       <StudentAnsView answer={answer} code={code} />
+      {/* <StudentAnsView answer={answer} code={code} /> */}
     </Drawer>}
   </>
 }

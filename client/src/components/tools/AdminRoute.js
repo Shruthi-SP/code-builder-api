@@ -5,20 +5,19 @@ import ErrorBoundary from "../ErrorBoundary"
 
 const AdminRoute = (props) => {
     const { component: Component, path, ...rest } = props
-    // useEffect(() => {
-    //     if (!props.admin) {
-    //         localStorage.removeItem('token')
-    //     }
-    // }, [])
+    //console.log('adminRoute=', props, Component.name, rest, rest.admin )
+    
     return (
-        <ErrorBoundary><Route path={path} exact={true} {...rest} render={(props) => {
-            return localStorage.getItem('token' && props.admin) ? (
-                <Component {...props} {...rest} />
-            ) : (
-                <Redirect to={{ pathname: '/login' }} />
-            )
-        }}
-        /></ErrorBoundary>
+        <ErrorBoundary>
+            <Route path={path} exact={true} {...rest} render={(props) => {
+                return (localStorage.getItem('token')) ? (
+                    rest.admin ? <Component {...props} {...rest} /> : <Redirect to={{ pathname: '/' }} />
+                ) : (
+                    <Redirect to={{ pathname: '/login' }} />
+                )
+            }}
+            />
+        </ErrorBoundary>
     )
 }
 

@@ -44,7 +44,7 @@ const Login = (props) => {
             // if(obj.role==='admin'){
             //     props.handleAdmin()
             // }
-            props.history.push('/codes')
+            props.history.push('/dashboard')
         }
         if(Object.keys(err).length === 0){
             const formData = {

@@ -11,7 +11,7 @@ import StudentsListing from "./StudentsListing"
 import CodeSnippets from "./CodeSnippets"
 //import ErrorBoundary from "./ErrorBoundary"
 import PrivateRoute from "./tools/PrivateRoute"
-import { Box, Grid} from "@mui/material"
+import { Box, Grid } from "@mui/material"
 import CodeDashboard from "./CodeDashboard"
 import Swal from 'sweetalert2'
 import StudentProfile from "./StudentProfile"
@@ -74,12 +74,12 @@ const CodesContainer = (props) => {
                     <div style={{ marginTop: '5px', maxWidth: "100%" }}>
                         <Grid container direction="row" sx={{ mt: 1, mb: 1 }}>
                             <Grid item xs sx={{ display: "flex", justifyContent: "flex-start", }}>
+                                <Link style={{ margin: '5px' }} to='/dashboard' >Dashboard</Link>
                                 <Link style={{ margin: '5px' }} to='/codes' >Codes List</Link>
                                 {admin && <Link style={{ margin: '5px' }} to='/create-code'>Create Code </Link>}
                                 {admin && <Link style={{ margin: '5px' }} to='/students'>Students List </Link>}
                                 {show && <Link style={{ margin: '5px' }} to='/codes/:id'>Snippet </Link>}
                                 {!admin && <Link style={{ margin: '5px' }} to='/students/:id'>My-Profile </Link>}
-                                <Link style={{ margin: '5px' }} to='/dashboard' >Dashboard</Link>
                                 <Link style={{ margin: '5px' }} to='/demo' >Demo</Link>
                             </Grid>
                             <Grid item xs sx={{ display: "flex", justifyContent: "flex-end" }}>

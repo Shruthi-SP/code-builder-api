@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { asyncGetCode } from "../actions/codesAction"
-import { Button, Grid, Box, Paper, Container,  } from "@mui/material"
+import { Button, Grid, Box, Paper, Container, Dialog, DialogContent, DialogActions } from "@mui/material"
 import ErrorBoundary from "./ErrorBoundary"
 import axios from "../config/axios-config"
 import CodeSolution from "./CodeSolution"
@@ -16,7 +16,7 @@ import { withRouter } from "react-router-dom"
 import Swal from 'sweetalert2'
 import Control from "./tools/Control"
 
-const CodePreviewTwo = (props) => {
+const CodeView = (props) => {
     const user = useSelector(state => {
         return state.user
     })
@@ -45,6 +45,11 @@ const CodePreviewTwo = (props) => {
     const [focusedObj, setFocusedObj] = useState({})
     const [points, setPoints] = useState(0)
     const [hintNum, setHintNum] = useState(0)
+    const [errOpen, setErrOpen] = useState(false)
+
+    const handleErrClose = () => {
+        setErrOpen(false)
+    }
 
     const getResult = (object) => {
         if (Object.keys(object).length > 0) {
@@ -192,9 +197,10 @@ const CodePreviewTwo = (props) => {
                     })
                 })
         }
+        setIsSubmitted(true)
         setErrors(err)
         setString(str)
-        setIsSubmitted(true)
+        setErrOpen(true)
         //localStorage.removeItem('user_inputs')
         localStorage.removeItem(_id)
     }
@@ -273,7 +279,7 @@ const CodePreviewTwo = (props) => {
     }
 
     const handleSolution = () => {
-        handleIsSubmit()
+        //handleIsSubmit()
         setSolution(!solution)
     }
 
@@ -330,6 +336,21 @@ const CodePreviewTwo = (props) => {
                     <h3 style={{ margin: '0px' }}><code>Title: {obj.title}</code></h3>
                     <h4 style={{ margin: '0px' }}><code>Statement: {obj.statement}</code></h4>
                     <h5 style={{ margin: '0px' }}><code>Points: {points}</code></h5>
+
+                    {errors.length > 0 && <>
+                        {/* <Dialog open={errOpen} onClose={handleErrClose}>
+                            <DialogContent> */}
+                        <h3 style={{marginBottom:'0px'}} >{string}</h3>
+                        <ul style={{margin:'0px'}} >{
+                            errors.map((ele, i) => {
+                                return <li style={{ color: 'red' }} key={i}>{ele}</li>
+                            })
+                        }</ul>
+                        {/* </DialogContent> */}
+                        {/* <DialogActions><Button onClick={handleErrClose}>No</Button></DialogActions> */}
+                        {/* </Dialog> */}
+                    </>}
+
                     <Box sx={{ m: 1, ml: 0 }}>
                         <Paper elevation={3} sx={{ p: 1, backgroundColor: '#F8F9F9' }}>
                             {start && <Button variant="contained" size="small" onClick={(e) => { handleStart(e) }}>start</Button>}
@@ -353,17 +374,14 @@ const CodePreviewTwo = (props) => {
                     </Box>
                 </div>
 
-                {errors.length > 0 && <ul>{
-                    errors.map((ele, i) => {
-                        return <li style={{ color: 'red' }} key={i}>{ele}</li>
-                    })
-                }</ul>}
+                {(isSubmitted || admin) && <Button variant="contained" size="small" onClick={handleSolution}>See Solution</Button>}
 
-                <h3>{string}</h3>
-
-                {(isSubmitted || admin) && <button onClick={() => { handleSolution() }}>See Solution</button>}
-
-                {(solution || admin) && <ErrorBoundary><CodeSolution codeId={props.codeId} obj={obj} handleSolution={handleSolution} admin={admin} /></ErrorBoundary>}
+                {(solution) && <Dialog open={solution} onClose={handleSolution}>
+                    <DialogContent>
+                        <ErrorBoundary><CodeSolution codeId={props.codeId} obj={obj} handleSolution={handleSolution} admin={admin} /></ErrorBoundary>
+                    </DialogContent>
+                    <DialogActions><Button size="small" onClick={handleSolution}>Close</Button></DialogActions>
+                </Dialog>}
 
                 {((isSubmitted || admin) && (explanations.length > 0)) && <Explanations explanations={explanations} />}
             </Grid>
@@ -373,4 +391,4 @@ const CodePreviewTwo = (props) => {
         </Grid>}
     </Container>
 }
-export default withRouter(CodePreviewTwo)
+export default withRouter(CodeView)
