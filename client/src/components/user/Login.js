@@ -3,7 +3,10 @@ import { withRouter } from "react-router-dom"
 import { useDispatch } from 'react-redux'
 import { asyncSetUser } from "../../actions/userAction"
 import validator from 'validator'
-import { Typography, TextField, Button} from "@mui/material"
+import { Typography, TextField, Button, Container, Box, CssBaseline } from "@mui/material"
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme();
 
 const Login = (props) => {
 
@@ -14,24 +17,24 @@ const Login = (props) => {
     const dispatch = useDispatch()
 
     const runValidation = () => {
-        if(email.trim().length === 0){
-            err.email = 'email required'
+        if (email.trim().length === 0) {
+            err.email = 'Please enter your email id!'
         }
-        else if(!validator.isEmail(email)){
-            err.email = 'email format is not valid'
+        else if (!validator.isEmail(email)) {
+            err.email = 'Please enter valid email id!'
         }
-        if(password.trim().length === 0){
-            err.password = 'password required'
+        if (password.trim().length === 0) {
+            err.password = 'Please enter your password!'
         }
     }
 
-    const handleChange = (e) =>{
+    const handleChange = (e) => {
         const attr = e.target.name
         const value = e.target.value
-        if(attr==='email'){
+        if (attr === 'email') {
             setEmail(value)
         }
-        if(attr==='password'){
+        if (attr === 'password') {
             setPassword(value)
         }
     }
@@ -46,7 +49,7 @@ const Login = (props) => {
             // }
             props.history.push('/dashboard')
         }
-        if(Object.keys(err).length === 0){
+        if (Object.keys(err).length === 0) {
             const formData = {
                 email: email,
                 password: password
@@ -59,18 +62,56 @@ const Login = (props) => {
     }
 
     return <div>
-        <Typography variant="h5" mb={1}>Login</Typography>
-        <form onSubmit={handleLoginSubmit}>
+        <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                        marginTop: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Typography component="h1" variant="h5">
+                        Login
+                    </Typography>
+                    <Box component="form" onSubmit={handleLoginSubmit} noValidate sx={{ mt: 1 }}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            value={email}
+                            onChange={handleChange}
+                        />{formErr.email && <span style={{ color: 'red' }}>{formErr.email}</span>}
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            value={password}
+                            onChange={handleChange}
+                        />{formErr.password && <span style={{ color: 'red' }}>{formErr.password}</span>}
 
-            <TextField label='Enter your email' variant='outlined' type='text' name='email' value={email} onChange={handleChange}></TextField><br />
-            {formErr.email && <span style={{color:'red'}}>{formErr.email}</span>}<br />
-
-            <TextField label='Enter password' variant='outlined' type='password' name='password' value={password} onChange={handleChange} ></TextField> <br />
-            {formErr.password && <span style={{color:'red'}}>{formErr.password}</span>}<br />
-
-            <Button sx={{ mr: 1 }} type="submit" variant="contained" color="primary" size="small">Submit</Button>
-
-        </form>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ m: 2, ml: 0 }}>
+                            Submit
+                        </Button>
+                    </Box>
+                </Box>
+            </Container>
+        </ThemeProvider>
     </div>
 }
 export default withRouter(Login)

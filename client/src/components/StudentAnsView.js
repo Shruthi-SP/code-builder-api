@@ -16,7 +16,7 @@ const StudentAnsView = (props) => {
     const getErrors = (obj) => {
         const ans = answer.answers.find(ele => ele.snipId === obj._id)
         if (ans.snipAnswer !== obj.answer) {
-            errArr.push(`Expected ${obj.answer} instead received ${ans.snipAnswer}`)
+            errArr.push(`Expected ${obj.answer} instead received ${ans.snipAnswer.length > 0 ? ans.snipAnswer : 'empty' }`)
         }
     }
 
@@ -68,13 +68,13 @@ const StudentAnsView = (props) => {
                     </Grid>
                 </Grid>
                 {soln ? <CodeSolution obj={code} /> : <>
-                    {errArr.length > 0 && <ul style={{ marginTop: '0px' }}>
+                    {errArr.length > 0 ? <ul style={{ marginTop: '0px' }}>
                         {
                             errArr.map((ele, i) => {
                                 return <li style={{ color: 'red' }} key={i}>{ele}</li>
                             })
                         }
-                    </ul>}
+                    </ul> : <Typography variant="h5" color="success.light" sx={{ m: 1 }} >Good Job! No Errors!</Typography>}
                 </>}
             </Grid>
         </Grid>

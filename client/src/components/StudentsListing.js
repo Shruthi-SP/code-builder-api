@@ -1,5 +1,5 @@
 import { Typography, TextField, InputAdornment } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import PropTypes from 'prop-types';
@@ -28,20 +28,10 @@ const StudentsListing = (props) => {
         return state.members.filter(ele=>ele.role==='student')
     })
 
-    const [students, setStudents] = useState(members)
     const [search, setSearch] = useState('')
     const [tableData, setTableData] = useState(members)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-
-    // useEffect(() => {
-    //     props.handleCancelShow()
-    //     //const s = members.filter(ele => ele.role === 'student')
-    //     //console.log('students pg=', s)
-    //     if(members.length > 0){
-    //       setStudents(members)
-    //     }
-    // }, [members])
 
     function TablePaginationActions(props) {
         const theme = useTheme();
@@ -126,14 +116,14 @@ const StudentsListing = (props) => {
       const handleSearchChange = (e) => {
         const userInput = e.target.value
         setSearch(userInput)
-        const newList = students.filter(ele => ele.user_name.toLowerCase().includes(userInput) || ele.email.toLowerCase().includes(userInput)||(ele.mobile && ele.mobile.includes(userInput)))
+        const newList = members.filter(ele => ele.user_name.toLowerCase().includes(userInput) || ele.email.toLowerCase().includes(userInput)||(ele.mobile && ele.mobile.includes(userInput)))
         setTableData(newList)
       }
 
     return (
           members.length === 0 ? <div><h2>No students</h2></div> : <div style={{ marginLeft: '5px' }}>
-                <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>Listing Students: {students.length}</Typography>
-                {students.length > 0 && <>
+                <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>Listing Students: {members.length}</Typography>
+                {members.length > 0 && <>
          <TextField
           variant='filled'
           sx={{ mb: 2 }}
