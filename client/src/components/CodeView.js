@@ -129,6 +129,7 @@ const CodeView = (props) => {
         const arr = [...arraySnippet]
         const result = arr.find(element => element._id === ele._id)
         result.value = e.target.value.trim()
+        //console.log(result, arr)
         localStorage.setItem('user_inputs', JSON.stringify(arr))
         setArraySnippet(arr)
     }
@@ -139,9 +140,7 @@ const CodeView = (props) => {
         localStorage.setItem('user_inputs', JSON.stringify(arr))
         setArraySnippet(arr)
     }
-    const handleIsSubmit = () => {
-        setIsSubmitted(false)
-    }
+    
     const handleSubmitAns = (e) => {
         e.preventDefault()
         const arr = arraySnippet.filter(ele => ele.group === 'input')
@@ -235,7 +234,6 @@ const CodeView = (props) => {
         if (count < obj.snippets.length) {
             const o = obj.snippets.slice(count).find(ele => ele.group === 'control')
             if (o) {
-                //let index = a.id + 1
                 const a = obj.snippets.findIndex(ele => ele._id === o._id)
                 let index = a + 1
                 const h = getHints(obj.snippets.slice(0, index))
@@ -259,10 +257,8 @@ const CodeView = (props) => {
         setNxt(false)
         const arr = [...obj.snippets].reverse()
         if (count > 0) {
-            //const a = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'input')
             const o = arr.slice((arr.length) - (count - 1)).find(ele => ele.group === 'control')
             if (o) {
-                //let index = a.id + 1
                 const a = obj.snippets.findIndex(ele => ele._id === o._id)
                 let index = a + 1
                 const h = getHints(obj.snippets.slice(0, index))
@@ -279,7 +275,6 @@ const CodeView = (props) => {
     }
 
     const handleSolution = () => {
-        //handleIsSubmit()
         setSolution(!solution)
     }
 
@@ -329,7 +324,7 @@ const CodeView = (props) => {
 
     return <Container>
         <h3>{admin ? 'Student view' : 'Solve'}</h3>
-        {/* <h2>Sibling of CodeSnippetForm component</h2> */}
+
         {Object.keys(obj).length > 0 && <Grid container>
             <Grid item xs={12} sm={6}>
                 <div>
@@ -338,17 +333,12 @@ const CodeView = (props) => {
                     <h5 style={{ margin: '0px' }}><code>Points: {points}</code></h5>
 
                     {errors.length > 0 && <>
-                        {/* <Dialog open={errOpen} onClose={handleErrClose}>
-                            <DialogContent> */}
                         <h3 style={{marginBottom:'0px'}} >{string}</h3>
                         <ul style={{margin:'0px'}} >{
                             errors.map((ele, i) => {
                                 return <li style={{ color: 'red' }} key={i}>{ele}</li>
                             })
                         }</ul>
-                        {/* </DialogContent> */}
-                        {/* <DialogActions><Button onClick={handleErrClose}>No</Button></DialogActions> */}
-                        {/* </Dialog> */}
                     </>}
 
                     <Box sx={{ m: 1, ml: 0 }}>
