@@ -337,18 +337,13 @@ const CodeView = (props) => {
                     <h4 style={{ margin: '0px' }}><code>Statement: {obj.statement}</code></h4>
                     <h5 style={{ margin: '0px' }}><code>Points: {points}</code></h5>
 
+                    {isSubmitted && <h3 style={{marginBottom:'0px'}} >{string}</h3>}
                     {errors.length > 0 && <>
-                        {/* <Dialog open={errOpen} onClose={handleErrClose}>
-                            <DialogContent> */}
-                        <h3 style={{marginBottom:'0px'}} >{string}</h3>
                         <ul style={{margin:'0px'}} >{
                             errors.map((ele, i) => {
                                 return <li style={{ color: 'red' }} key={i}>{ele}</li>
                             })
                         }</ul>
-                        {/* </DialogContent> */}
-                        {/* <DialogActions><Button onClick={handleErrClose}>No</Button></DialogActions> */}
-                        {/* </Dialog> */}
                     </>}
 
                     <Box sx={{ m: 1, ml: 0 }}>
