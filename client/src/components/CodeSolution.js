@@ -35,7 +35,7 @@ const CodeSolution = (props) => {
     }
 
     return <div style={{margin:'0px', marginLeft:'10px' }}>
-        <h3 style={{margin: '0px'}}>Solution</h3>
+        <h3 style={{margin: '0px', marginBottom:'10px'}}>Solution :</h3>
         <code>
             {
                 array.map(ele => {

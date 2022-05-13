@@ -25,6 +25,18 @@ const CodeSnippets = (props) => {
     const [arraySnippet, setArraySnippet] = useState([])
     const [remove, setRemove] = useState(false)
     const [points, setPoints] = useState(0)
+    const [state, setState] = useState({
+        bottom: false
+    });
+
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+
+        setState({ ...state, [anchor]: open });
+    };
+
 
     const getResult = (object) => {
         if (Object.keys(object).length > 0) {
@@ -110,6 +122,7 @@ const CodeSnippets = (props) => {
                                 <Button startIcon={<><Edit /><Add /></>} onClick={handleEditSnippets}>Snippets</Button>
                             </ButtonGroup><br />
                             {/* <Button onClick={handlePreview}>{preview ? 'Close Preview' : 'Show Preview'}</Button> */}
+                            <Button onClick={toggleDrawer('bottom', true)}>preview</Button>
                             {remove && <Dialog open={remove} onClose={handleClose}>
                                 <DialogContent>Are you sure want to delete?</DialogContent>
                                 <DialogActions><Button onClick={(e) => { handleYes(e) }}>Yes</Button><Button onClick={handleClose}>No</Button></DialogActions>
@@ -118,7 +131,7 @@ const CodeSnippets = (props) => {
                     }
                 </div>
             }
-            {admin ? <CodePreview /> : <CodeView/> }
+            {admin ? <CodePreview state={state} toggleDrawer={toggleDrawer} /> : <CodeView/> }
         </div>
     )
 }

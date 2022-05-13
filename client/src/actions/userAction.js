@@ -82,7 +82,7 @@ export const asyncSetUser = (formData, redirect) => {
                         })
                     } else {
                         allStudents = [...result]
-                        obj = result.find(ele => ele.email === formData.email)
+                        obj = result.find(ele => ele.email === formData.email && ele.mobile === formData.password)
                         //console.log('obj result=', obj)
                         if (!obj || Object.keys(obj).length === 0) {
                             Swal.fire({

@@ -3,8 +3,9 @@ import { withRouter } from "react-router-dom"
 import { useDispatch } from 'react-redux'
 import { asyncSetUser } from "../../actions/userAction"
 import validator from 'validator'
-import { Typography, TextField, Button, Container, Box, CssBaseline } from "@mui/material"
+import { Typography, TextField, Button, Container, Box, CssBaseline, InputAdornment, IconButton } from "@mui/material"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Visibility, VisibilityOff } from "@mui/icons-material"
 
 const theme = createTheme();
 
@@ -13,6 +14,7 @@ const Login = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [formErr, setFormErr] = useState({})
+    const [icon, setIcon] = useState(false)
     const err = {}
     const dispatch = useDispatch()
 
@@ -61,6 +63,10 @@ const Login = (props) => {
         }
     }
 
+    const handleIcons = () => {
+        setIcon(!icon)
+    }
+
     return <div>
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -92,9 +98,16 @@ const Login = (props) => {
                             margin="normal"
                             required
                             fullWidth
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="start">
+                                        <IconButton onClick={handleIcons}>{icon ? <VisibilityOff /> : <Visibility />}</IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
                             name="password"
                             label="Password"
-                            type="password"
+                            type={icon ? "text" : "password"}
                             id="password"
                             autoComplete="current-password"
                             value={password}

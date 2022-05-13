@@ -43,8 +43,8 @@ const CodeDashboard = (props) => {
     const [studentSpec, setStudentSpec] = useState([])
     const [go, setGo] = useState(false)
 
-    useEffect(()=>{
-        const a = members.filter(ele=>ele.role==='student')
+    useEffect(() => {
+        const a = members.filter(ele => ele.role === 'student')
         setArray1(a)
     }, [members])
 
@@ -203,37 +203,37 @@ const CodeDashboard = (props) => {
             </Grid>
         </>}
         <Grid container direction='row'>
-                <Grid item>
-                    <Autocomplete
-                        options={auto}
-                        //{...defaultProps}
-                        sx={{ width: 300, m: 2, ml: 0 }}
-                        value={statement}
-                        isOptionEqualToValue={(option, value) => option._id === value._id}
-                        onChange={(event, newValue) => {
-                            setStatement(newValue);
-                        }}
-                        // renderInput={(params) => (
-                        //   <TextField {...params} label="Codes" variant="standard" />
-                        // )}
-                        //onChange={(e)=>{setValue(e.target.value)}}
-                        renderInput={(params) => <TextField {...params} label="Select the Code" />}
-                    />
-                </Grid>
-                {admin && <Grid>
-                    <Autocomplete
-                        {...defaultProps}
-                        sx={{ width: 300, m: 2 }}
-                        value={student}
-                        onChange={(event, newValue) => {
-                            setStudent(newValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} label="Select the Student" />}
-                    />
-                </Grid>}
-                <Button variant="contained" size="small" endIcon={<FastForward />} sx={{ mt: 2, ml: 2, p: 0, maxHeight: 52 }} onClick={handleGo}>Go</Button>
+            <Grid item>
+                <Autocomplete
+                    options={auto}
+                    //{...defaultProps}
+                    sx={{ width: 300, m: 2, ml: 0 }}
+                    value={statement}
+                    isOptionEqualToValue={(option, value) => option._id === value._id}
+                    onChange={(event, newValue) => {
+                        setStatement(newValue);
+                    }}
+                    // renderInput={(params) => (
+                    //   <TextField {...params} label="Codes" variant="standard" />
+                    // )}
+                    //onChange={(e)=>{setValue(e.target.value)}}
+                    renderInput={(params) => <TextField {...params} label="Select the Code" />}
+                />
             </Grid>
-        {(go && student) && <>{(studentSpec.length > 0 ) ? <DashboardTable heading={`${student.user_name} attempt to "${statement.statement}" question`} tableData={studentSpec} /> : <p>No answers yet from {student.user_name}</p>}</>}
+            {admin && <Grid>
+                <Autocomplete
+                    {...defaultProps}
+                    sx={{ width: 300, m: 2 }}
+                    value={student}
+                    onChange={(event, newValue) => {
+                        setStudent(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} label="Select the Student" />}
+                />
+            </Grid>}
+            <Button variant="contained" size="small" endIcon={<FastForward />} sx={{ mt: 2, ml: 2, p: 0, maxHeight: 52 }} onClick={handleGo}>Go</Button>
+        </Grid>
+        {(go && student) && <>{(studentSpec.length > 0) ? <DashboardTable heading={`${student.user_name} attempt to ${statement ? `"${statement.statement}"` : 'all'} question`} tableData={studentSpec} /> : <p>No answers yet from {student.user_name}</p>}</>}
         {(go && admin && statement) && <>{(studentsAll.length > 0) ? <DashboardTable heading={`All student's answer to "${statement.statement}" question`} tableData={studentsAll} /> : <p>No answers yet from all students</p>}</>}
     </div>
 }
