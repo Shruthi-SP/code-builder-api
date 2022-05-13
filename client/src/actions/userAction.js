@@ -69,7 +69,7 @@ export const asyncSetUser = (formData, redirect) => {
             }
         })
         if (Object.keys(obj).length === 0) {
-            axiosObj.get('https://dct-cors.herokuapp.com/https://code.dctacademy.com/api/v1/ml/data/students/?key=122c880b872aaa7224074498b9bb7e24')
+            axiosObj.get(`https://dct-cors.herokuapp.com/https://code.dctacademy.com/api/v1/ml/data/students?key=${process.env.REACT_APP_TOKEN}`)
                 .then((response) => {
                     const result = response.data
                     //console.log('cp api=', result)
@@ -82,7 +82,7 @@ export const asyncSetUser = (formData, redirect) => {
                         })
                     } else {
                         allStudents = [...result]
-                        obj = result.find(ele => ele.email === formData.email)
+                        obj = result.find(ele => ele.email === formData.email && ele.mobile === formData.password)
                         //console.log('obj result=', obj)
                         if (!obj || Object.keys(obj).length === 0) {
                             Swal.fire({
