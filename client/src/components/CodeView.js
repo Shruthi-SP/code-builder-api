@@ -332,6 +332,7 @@ const CodeView = (props) => {
                     <h4 style={{ margin: '0px' }}><code>Statement: {obj.statement}</code></h4>
                     <h5 style={{ margin: '0px' }}><code>Points: {points}</code></h5>
 
+                    {isSubmitted && <h3 style={{marginBottom:'0px'}} >{string}</h3>}
                     {errors.length > 0 && <>
                         <h3 style={{marginBottom:'0px'}} >{string}</h3>
                         <ul style={{margin:'0px'}} >{

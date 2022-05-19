@@ -8,7 +8,6 @@ import Submit from "./tools/Submit"
 import Tab from "./tools/Tab"
 import CodeSolution from "./CodeSolution"
 import { Grid } from "@mui/material"
-//import CodeStepper from "./CodeStepper"
 import ErrorBoundary from "./ErrorBoundary"
 import Explanations from "./Explanations"
 import Control from "./tools/Control"
@@ -25,14 +24,11 @@ const ShowCode = (props) => {
         const ar = []
         a.forEach(ele => {
             if (ele.hasOwnProperty('hints')) {
-                if(ele.hints.length>0){
-                    for(let i=0;i<ele.hints.length;i++){
+                if (ele.hints.length > 0) {
+                    for (let i = 0; i < ele.hints.length; i++) {
                         ar.push(ele.hints[i].hint)
                     }
                 }
-                // if (ele.hint !== '') {
-                //     ar.push(ele.hint)
-                // }
             }
         })
         return ar
@@ -66,44 +62,6 @@ const ShowCode = (props) => {
         else throw new Error('I ShowCode crashed! Code is {}');
     }, [codeSnippet])
 
-    // const steps = [], hintsArr = []
-    // let count = 1, start = 0
-    //--------------------------horizontal stepper------------------------
-    // codeObj.snippets.forEach((ele, i) => {
-    //     //let end = i
-    //     if (ele.group === 'input') {
-    //         steps.push(`input-${count}`)
-    //         count++
-    //         const arr = getHints(code.snippets.slice(start, i + 1))
-    //         hintsArr.push(arr)
-    //         start = i + 1
-    //     }
-    // })
-
-    //-------------------------vertical stepper---------------------------
-    // code.snippets.forEach((ele, i) => {
-    //     let obj = {}
-    //     if (ele.group === 'input') {
-    //         obj.label = `input-${count}`
-    //         obj.description = getHints(code.snippets.slice(start, i + 1))
-    //         count++
-    //         steps.push(obj)
-    //         start = i + 1
-    //     }
-    // })
-
-    // const handleNext = () => {
-    //     setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    // };
-
-    // const handleBack = () => {
-    //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    // };
-
-    // const handleReset = () => {
-    //     setActiveStep(0);
-    // };
-
     const handleSolution = () => {
         handleIsSubmit()
         setSolution(!solution)
@@ -129,10 +87,10 @@ const ShowCode = (props) => {
         }
     }
 
-    return <>
-        {admin ? <h3>Code Preview</h3> : <h3>Code</h3>}
+    return <div style={{ margin: '0px', marginLeft: '25px' }}>
+        {admin ? <h3 style={{ margin: "0px", marginBottom: '10px' }}>Code Preview</h3> : <h3>Code</h3>}
         <Grid container>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={8}>
                 <div>
                     <code>
                         <b>{code.title}</b><br />
@@ -157,15 +115,20 @@ const ShowCode = (props) => {
                     }</ul>}
                     <h3>{string}</h3>
                     {(isSubmitted || !admin) && <button onClick={() => { handleSolution() }}>See Solution</button>}
-                    {(solution || admin) && <ErrorBoundary><CodeSolution codeId={props.codeId} obj={code} handleSolution={handleSolution} admin={admin} /></ErrorBoundary>}
                     {(isSubmitted || admin) && <Explanations explanations={explanations} />}
                 </div>
+                <div style={{
+                    position: 'sticky', top: 0, padding: '5px', backgroundColor: "#cae8ca", border: '2px solid #4CAF50'
+                }}>{(solution || admin) && <ErrorBoundary><CodeSolution codeId={props.codeId} obj={code} handleSolution={handleSolution} admin={admin} /></ErrorBoundary>}</div>
+                <div style={{ margin: '50px auto 0px auto', padding: '10px', width: '300px', height: '2000px', color: 'white'
+                }}>
+                </div>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
                 {hints.length > 0 && <Hint hints={hints} />}
             </Grid>
         </Grid>
 
-    </>
+    </div>
 }
 export default ShowCode

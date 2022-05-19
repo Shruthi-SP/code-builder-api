@@ -71,7 +71,8 @@ const CodesContainer = (props) => {
 
     return (
         <>{
-            members.length > 0 && <Box>
+            // members.length > 0 && 
+            <Box>
                 {
                     (userLoggedIn) ?
                         <div style={{ marginTop: '5px', maxWidth: "100%" }}>
