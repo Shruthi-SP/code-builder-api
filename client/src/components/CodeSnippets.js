@@ -88,7 +88,6 @@ const CodeSnippets = (props) => {
         <div>
             {
                 (admin && Object.keys(obj).length > 0) && <div style={{ margin: '5px' }}>
-                    <h3>Admin view</h3>
                     <Typography variant="h5" color="primary.dark">Code and Snippets</Typography>
                     {snippetToggle ? <>
                         <ErrorBoundary><CodeSnippetForm admin={admin} codeId={_id} {...props} obj={obj} handleEditSnippets={handleEditSnippets} /></ErrorBoundary>

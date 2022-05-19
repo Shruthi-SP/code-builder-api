@@ -4,7 +4,7 @@ const Hint = (props) => {
     const { hints, arrHints, isFocused, handleHintFocusEnter, handleHintFocusLeave } = props
     
     return (
-        <div style={{ marginLeft: '75px' }}>
+        <div style={{ marginLeft: '25px' }}>
             <h4 style={{ marginBottom: '0px', marginTop: '0px' }}>Hints</h4>
             <ol>
                {
