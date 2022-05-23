@@ -45,12 +45,7 @@ const CodeView = (props) => {
     const [focusedObj, setFocusedObj] = useState({})
     const [points, setPoints] = useState(0)
     const [hintNum, setHintNum] = useState(0)
-    const [errOpen, setErrOpen] = useState(false)
-
-    const handleErrClose = () => {
-        setErrOpen(false)
-    }
-
+    
     const getResult = (object) => {
         if (Object.keys(object).length > 0) {
             setObj(object)
@@ -62,7 +57,7 @@ const CodeView = (props) => {
                 setArraySnippet(object.snippets)
                 setPoints(object.snippets.filter(ele => ele.group === 'input').length)
             }
-            const h = getHints(object.snippets)
+            //const h = getHints(object.snippets)
             //setHints(h)
             const ex = getExplanations(object.snippets)
             setExplanations(ex)
@@ -140,7 +135,7 @@ const CodeView = (props) => {
         localStorage.setItem('user_inputs', JSON.stringify(arr))
         setArraySnippet(arr)
     }
-    
+
     const handleSubmitAns = (e) => {
         e.preventDefault()
         const arr = arraySnippet.filter(ele => ele.group === 'input')
@@ -199,7 +194,7 @@ const CodeView = (props) => {
         setIsSubmitted(true)
         setErrors(err)
         setString(str)
-        setErrOpen(true)
+        //setErrOpen(true)
         //localStorage.removeItem('user_inputs')
         localStorage.removeItem(_id)
     }
@@ -207,7 +202,7 @@ const CodeView = (props) => {
         e.preventDefault()
         setStart(!start)
         setPrev(true)
-        const a = obj.snippets.find(ele => ele.group === 'control')
+        //const a = obj.snippets.find(ele => ele.group === 'control')
         const index = obj.snippets.findIndex(ele => ele.group === 'control')
         const h = getHints(obj.snippets.slice(0, index + 1))
         setStudHints(h)
@@ -332,9 +327,9 @@ const CodeView = (props) => {
                     <h4 style={{ margin: '0px' }}><code>Statement: {obj.statement}</code></h4>
                     <h5 style={{ margin: '0px' }}><code>Points: {points}</code></h5>
 
-                    {isSubmitted && <h3 style={{marginBottom:'0px'}} >{string}</h3>}
+                    {isSubmitted && <h3 style={{ marginBottom: '0px' }} >{string}</h3>}
                     {errors.length > 0 && <>
-                        <ul style={{margin:'0px'}} >{
+                        <ul style={{ margin: '0px' }} >{
                             errors.map((ele, i) => {
                                 return <li style={{ color: 'red' }} key={i}>{ele}</li>
                             })
@@ -354,8 +349,10 @@ const CodeView = (props) => {
                                             })
                                         }
                                         <br /><br />
-                                        {!start && <><Button sx={{ mr: 1 }} variant="contained" size="small" disabled={prev} onClick={(e) => { handlePrevious(e) }}>Previous</Button>
-                                            <Button variant="contained" size="small" disabled={nxt} onClick={(e) => { handleNext(e) }}>Next</Button></>}
+                                        {!start && <>
+                                            <Button sx={{ mr: 1 }} variant="contained" size="small" disabled={prev} onClick={(e) => { handlePrevious(e) }}>Previous</Button>
+                                            <Button variant="contained" size="small" disabled={nxt} onClick={(e) => { handleNext(e) }}>Next</Button>
+                                        </>}
                                     </form>
                                     <br />
                                 </div>

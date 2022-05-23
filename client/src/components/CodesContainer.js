@@ -120,7 +120,7 @@ const CodesContainer = (props) => {
                 }}></Route>
 
                 <PrivateRoute path='/codes' admin={admin} component={CodesListing} handleShow={handleShow} handleCancelShow={handleCancelShow} />
-                <PrivateRoute path='/students' admin={admin} component={StudentsListing} handleShow={handleShow} handleCancelShow={handleCancelShow} />
+                <AdminRoute path='/students' admin={admin} component={StudentsListing} handleShow={handleShow} handleCancelShow={handleCancelShow} />
                 <AdminRoute path='/create-code' admin={admin} component={AddCode} handleShow={handleShow} handleCancelShow={handleCancelShow} />
                 <PrivateRoute path='/codes/:id' admin={admin} component={CodeSnippets} />
                 <PrivateRoute path='/students/:id' admin={admin} component={StudentProfile} />

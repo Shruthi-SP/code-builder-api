@@ -4,7 +4,6 @@ import { Add, Cancel, Edit } from "@mui/icons-material"
 import ModalHints from "./ModalHints"
 
 const FormText = (props) => {
-    console.log('form txt props=',props)
     const {length, handleCancelText, handleCancelEdit, formSubmission, value: editTxt, hint: editHint, hints: editHints, explanation: editExplain, id: editId, displayOrder: editDisOrder } = props
     const [id, setId] = useState(editId ? editId : length)
     const [txt, setTxt] = useState(editTxt ? editTxt : '')
